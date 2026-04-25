@@ -4,8 +4,6 @@
   <meta charset="UTF-8">
   <title>İstanbul Sende</title>
   <link rel="stylesheet" href="style.css">
-
-  <!-- Leaflet CSS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
 </head>
 <body>
@@ -16,28 +14,34 @@
 </header>
 
 <section>
+
+  <h2>Günlük Hayat</h2>
+
+  <a href="https://www.eczaneler.gen.tr/nobetci-istanbul" target="_blank" class="btn">Nöbetçi Eczaneler</a>
+  <a href="https://www.mgm.gov.tr/" target="_blank" class="btn">Hava Durumu</a>
+
+  <h2>Ulaşım Bilgileri</h2>
+
+  <a href="https://www.iett.istanbul/" target="_blank" class="btn">İETT Hat Bilgileri</a>
+  <a href="https://www.trafik.gov.tr/" target="_blank" class="btn">Trafik Durumu</a>
+
+  <h2>Acil İletişim</h2>
+
+  <div class="card">
+    <p>112 - Acil</p>
+    <p>110 - İtfaiye</p>
+    <p>155 - Polis</p>
+  </div>
+
   <h2>Gezilecek Yerler</h2>
-
-  <div class="card">
-    <h3>Ayasofya</h3>
-    <p>Tarihi ve büyüleyici yapı</p>
-  </div>
-
-  <div class="card">
-    <h3>Taksim Meydanı</h3>
-    <p>İstanbul’un kalbi</p>
-  </div>
+  <div id="liste"></div>
 
   <h2>Harita</h2>
   <div id="map"></div>
+
 </section>
 
-<button onclick="mesaj()">Tıkla</button>
-
-<!-- Leaflet JS (ÖNCE) -->
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-
-<!-- Senin JS (SONRA) -->
 <script src="script.js"></script>
 
 </body>
