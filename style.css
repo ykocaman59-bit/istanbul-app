@@ -1,7 +1,7 @@
 body {
   font-family: 'Segoe UI', sans-serif;
   margin: 0;
-  background: #eef2f7;
+  background: #f4f6f9;
 }
 
 header {
@@ -15,31 +15,36 @@ section {
   padding: 20px;
 }
 
+h2 {
+  margin-top: 30px;
+}
+
+.btn {
+  display: block;
+  background: #6b3f2b;
+  color: white;
+  padding: 12px;
+  margin: 10px 0;
+  text-align: center;
+  border-radius: 10px;
+  text-decoration: none;
+}
+
 .card {
   background: white;
-  margin-bottom: 20px;
-  padding: 20px;
-  border-radius: 15px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-  transition: 0.3s;
-}
-
-.card:hover {
-  transform: scale(1.03);
-}
-
-button {
-  margin: 20px;
-  padding: 10px 20px;
-  border: none;
-  background: #0d6efd;
-  color: white;
+  padding: 15px;
   border-radius: 10px;
 }
 
-/* HARİTA */
 #map {
   height: 300px;
   margin-top: 20px;
-  border-radius: 15px;
+  border-radius: 10px;
+}
+
+.card {
+  margin-top: 10px;
+  padding: 15px;
+  background: white;
+  border-radius: 10px;
 }
