@@ -1,13 +1,13 @@
 body {
-  font-family: Arial;
+  font-family: 'Segoe UI', sans-serif;
   margin: 0;
-  background: #f5f5f5;
+  background: #eef2f7;
 }
 
 header {
-  background: #0d6efd;
+  background: linear-gradient(135deg, #0d6efd, #00c6ff);
   color: white;
-  padding: 20px;
+  padding: 30px;
   text-align: center;
 }
 
@@ -17,7 +17,22 @@ section {
 
 .card {
   background: white;
-  margin-bottom: 15px;
-  padding: 15px;
+  margin-bottom: 20px;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  transition: 0.3s;
+}
+
+.card:hover {
+  transform: scale(1.03);
+}
+
+button {
+  margin: 20px;
+  padding: 10px 20px;
+  border: none;
+  background: #0d6efd;
+  color: white;
   border-radius: 10px;
 }
