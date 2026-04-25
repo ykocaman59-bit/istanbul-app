@@ -34,6 +34,10 @@ button {
 .back {
     background: #333;
 }
+
+.acil {
+    background: red;
+}
 </style>
 
 <script>
@@ -41,8 +45,9 @@ function git(link){
     window.location.href = link;
 }
 
+/* 🔥 DÜZELTİLDİ: direkt HARİTA açar */
 function harita(q){
-    window.location.href = "https://www.google.com/maps/search/?api=1&query=" + q;
+    window.location.href = "https://www.google.com/maps?q=" + encodeURIComponent(q);
 }
 
 function sayfa(secim){
@@ -51,8 +56,8 @@ let alan = document.getElementById("icerik");
 
 if(secim=="gunluk"){
 alan.innerHTML = `
-<button onclick="git('https://www.google.com/maps/search/nöbetçi+eczane+istanbul')">Nöbetçi Eczaneler Harita</button>
 <button onclick="git('https://www.turkiye.gov.tr/saglik-bakanligi-nobetci-eczane-sorgulama')">Nöbetçi Eczaneler</button>
+<button onclick="git('https://www.google.com/maps/search/nöbetçi+eczane+istanbul')">Nöbetçi Eczane Harita</button>
 <button onclick="git('https://www.mgm.gov.tr/tahmin/il-ve-ilceler.aspx?il=Istanbul')">Hava Durumu</button>
 
 <button class="back" onclick="anasayfa()">← Geri</button>
@@ -61,8 +66,8 @@ alan.innerHTML = `
 
 if(secim=="ulasim"){
 alan.innerHTML = `
-<button onclick="git('https://iett.istanbul/')">İETT Otobüs Saatleri</button>
-<button onclick="git('https://www.metro.istanbul/Home/Index')">Metro Saatleri</button>
+<button onclick="git('https://iett.istanbul/')">İETT</button>
+<button onclick="git('https://www.metro.istanbul/Home/Index')">Metro</button>
 
 <button class="back" onclick="anasayfa()">← Geri</button>
 `;
@@ -70,9 +75,9 @@ alan.innerHTML = `
 
 if(secim=="trafik"){
 alan.innerHTML = `
-<button onclick="git('https://uym.ibb.gov.tr/yharita6/')">Canlı Trafik Yoğunluk</button>
+<button onclick="git('https://uym.ibb.gov.tr/yharita6/')">Canlı Trafik</button>
 <button onclick="git('https://uym.ibb.gov.tr/')">Trafik Haritası</button>
-<button onclick="git('https://www.ibb.istanbul/tr-TR/duyurular')">İBB Trafik Duyuruları</button>
+<button onclick="git('https://www.ibb.istanbul/')">İBB Duyurular</button>
 
 <button class="back" onclick="anasayfa()">← Geri</button>
 `;
@@ -80,31 +85,56 @@ alan.innerHTML = `
 
 if(secim=="belediye"){
 alan.innerHTML = `
-<button onclick="git('https://www.turkiye.gov.tr/')">E-Devlet Giriş</button>
+<button onclick="git('https://www.turkiye.gov.tr/')">E-Devlet</button>
 <button onclick="git('https://ivd.gib.gov.tr/')">Vergi & Ceza</button>
 
 <button class="back" onclick="anasayfa()">← Geri</button>
 `;
 }
 
+/* 🔥 HARİTA ARTIK DİREKT KONUM AÇAR */
 if(secim=="gezilecek"){
 alan.innerHTML = `
-<button onclick="harita('Ayasofya')">Ayasofya</button>
-<button onclick="harita('Topkapı Sarayı')">Topkapı Sarayı</button>
-<button onclick="harita('Dolmabahçe Sarayı')">Dolmabahçe Sarayı</button>
-<button onclick="harita('Galata Kulesi')">Galata Kulesi</button>
-<button onclick="harita('Yerebatan Sarnıcı')">Yerebatan Sarnıcı</button>
-<button onclick="harita('İstanbul Arkeoloji Müzesi')">Arkeoloji Müzesi</button>
-<button onclick="harita('Rahmi Koç Müzesi')">Rahmi Koç Müzesi</button>
-<button onclick="harita('Miniatürk')">Miniatürk</button>
-<button onclick="harita('Panorama 1453')">Panorama 1453</button>
-<button onclick="harita('Pera Müzesi')">Pera Müzesi</button>
-<button onclick="harita('Sakıp Sabancı Müzesi')">Sabancı Müzesi</button>
-<button onclick="harita('İstanbul Modern')">İstanbul Modern</button>
-<button onclick="harita('Kız Kulesi')">Kız Kulesi</button>
-<button onclick="harita('Pierre Loti Tepesi')">Pierre Loti</button>
-<button onclick="harita('Emirgan Korusu')">Emirgan Korusu</button>
-<button onclick="harita('Gülhane Parkı')">Gülhane Parkı</button>
+<button onclick="harita('Ayasofya İstanbul')">Ayasofya</button>
+<button onclick="harita('Topkapı Sarayı İstanbul')">Topkapı Sarayı</button>
+<button onclick="harita('Dolmabahçe Sarayı İstanbul')">Dolmabahçe Sarayı</button>
+<button onclick="harita('Galata Kulesi İstanbul')">Galata Kulesi</button>
+<button onclick="harita('Yerebatan Sarnıcı İstanbul')">Yerebatan Sarnıcı</button>
+<button onclick="harita('Kız Kulesi İstanbul')">Kız Kulesi</button>
+<button onclick="harita('Miniatürk İstanbul')">Miniatürk</button>
+<button onclick="harita('Pierre Loti Tepesi İstanbul')">Pierre Loti</button>
+<button onclick="harita('Emirgan Korusu İstanbul')">Emirgan Korusu</button>
+<button onclick="harita('Gülhane Parkı İstanbul')">Gülhane Parkı</button>
+
+<button class="back" onclick="anasayfa()">← Geri</button>
+`;
+}
+
+/* ✅ ACİL İLETİŞİM GERİ GELDİ */
+if(secim=="acil"){
+alan.innerHTML = `
+<button class="acil" onclick="git('tel:112')">🚑 112 Ambulans</button>
+<button class="acil" onclick="git('tel:155')">🚓 155 Polis</button>
+<button class="acil" onclick="git('tel:110')">🚒 110 İtfaiye</button>
+<button class="acil" onclick="git('tel:183')">📞 Sosyal Destek</button>
+
+<button class="back" onclick="anasayfa()">← Geri</button>
+`;
+}
+
+/* ✅ HAKKIMDA GERİ GELDİ */
+if(secim=="hakkimda"){
+alan.innerHTML = `
+<div style="padding:20px; text-align:left;">
+<h3>İstanbul Sende</h3>
+
+<p>İstanbul Sende, İstanbul’da yaşayan bireylerin günlük ihtiyaçlarına hızlı, pratik ve güvenilir çözümler sunmak amacıyla geliştirilmiş bir dijital platformdur.</p>
+
+<p>Bu uygulama; nöbetçi eczane, hava durumu, trafik, ulaşım ve resmi hizmetlere tek noktadan erişim sağlar.</p>
+
+<p><b>Not:</b> Uygulama resmi kurumlara ait değildir. Sadece ilgili resmi web sitelerine yönlendirme yapar.</p>
+
+</div>
 
 <button class="back" onclick="anasayfa()">← Geri</button>
 `;
@@ -119,6 +149,8 @@ document.getElementById("icerik").innerHTML = `
 <button onclick="sayfa('trafik')">Trafik Durumu</button>
 <button onclick="sayfa('belediye')">Belediye Hizmetleri</button>
 <button onclick="sayfa('gezilecek')">Gezilecek Yerler</button>
+<button onclick="sayfa('acil')">Acil İletişim</button>
+<button onclick="sayfa('hakkimda')">Hakkımda</button>
 `;
 }
 </script>
@@ -135,6 +167,8 @@ document.getElementById("icerik").innerHTML = `
 <button onclick="sayfa('trafik')">Trafik Durumu</button>
 <button onclick="sayfa('belediye')">Belediye Hizmetleri</button>
 <button onclick="sayfa('gezilecek')">Gezilecek Yerler</button>
+<button onclick="sayfa('acil')">Acil İletişim</button>
+<button onclick="sayfa('hakkimda')">Hakkımda</button>
 </div>
 
 </body>
