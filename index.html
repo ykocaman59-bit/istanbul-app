@@ -10,74 +10,109 @@ body {
     margin: 0;
     font-family: Arial;
     background: #f2f2f2;
+    text-align: center;
 }
 
 .header {
     background: linear-gradient(to right, #00c6ff, #0072ff);
     color: white;
-    text-align: center;
     padding: 20px;
     font-size: 24px;
     font-weight: bold;
 }
 
 .btn {
-    display: block;
     width: 85%;
-    margin: 15px auto;
-    padding: 18px;
-    background: #7b3f1d;
+    margin: 10px auto;
+    padding: 15px;
+    background: #7a3e1d;
     color: white;
     border: none;
     border-radius: 25px;
     font-size: 18px;
+    display: block;
     cursor: pointer;
 }
 
-/* BAŞTA GİZLİ */
-iframe {
-    width: 95%;
-    height: 400px;
-    border: none;
-    margin: 20px auto;
+.btn:hover {
+    opacity: 0.9;
+}
+
+.alt-menu {
     display: none;
-    border-radius: 15px;
+    margin-bottom: 10px;
+}
+
+.alt-menu button {
+    background: #a55a2a;
+    font-size: 16px;
 }
 </style>
-
 </head>
 
 <body>
 
 <div class="header">İstanbul Sende</div>
 
-<button class="btn">Günlük Hayat</button>
-<button class="btn">Ulaşım</button>
-<button class="btn">Gezilecek Yerler</button>
-<button class="btn">Acil İletişim</button>
+<!-- ANA BUTONLAR -->
+<button class="btn" onclick="toggleMenu('gunluk')">Günlük Hayat</button>
+<div id="gunluk" class="alt-menu">
+    <button class="btn" onclick="alert('Nöbetçi eczaneler yakında')">Nöbetçi Eczaneler</button>
+    <button class="btn" onclick="alert('Hava durumu yakında')">Hava Durumu</button>
+</div>
 
-<button class="btn" onclick="trafik()">Trafik Haritası</button>
-<button class="btn" onclick="canli()">Canlı Trafik (Yoğunluk)</button>
-<button class="btn" onclick="mobese()">Canlı Kameralar (MOBESE)</button>
+<button class="btn" onclick="toggleMenu('ulasim')">Ulaşım</button>
+<div id="ulasim" class="alt-menu">
+    <button class="btn" onclick="window.open('https://iett.istanbul', '_blank')">İETT</button>
+    <button class="btn" onclick="window.open('https://metro.istanbul', '_blank')">Metro</button>
+</div>
 
-<iframe id="harita"></iframe>
+<button class="btn" onclick="toggleMenu('gezilecek')">Gezilecek Yerler</button>
+<div id="gezilecek" class="alt-menu">
+    <button class="btn" onclick="window.open('https://www.google.com/maps?q=Ayasofya', '_blank')">Ayasofya</button>
+    <button class="btn" onclick="window.open('https://www.google.com/maps?q=Galata+Kulesi', '_blank')">Galata Kulesi</button>
+</div>
 
+<button class="btn" onclick="toggleMenu('acil')">Acil İletişim</button>
+<div id="acil" class="alt-menu">
+    <button class="btn" onclick="call('112')">112 Acil</button>
+    <button class="btn" onclick="call('155')">Polis</button>
+</div>
+
+<!-- TRAFİK -->
+<button class="btn" onclick="trafikAc()">Trafik Durumu</button>
+
+<button class="btn" onclick="googleTrafik()">Canlı Trafik (Yoğunluk)</button>
+
+<button class="btn" onclick="mobeseAc()">Canlı Kameralar (MOBESE)</button>
+
+<!-- JS -->
 <script>
 
-function trafik() {
-    let h = document.getElementById("harita");
-    h.style.display = "block";
-    h.src = "https://sehirharitasi.ibb.gov.tr/";
+function toggleMenu(id) {
+    var menus = document.querySelectorAll(".alt-menu");
+    menus.forEach(m => {
+        if (m.id !== id) m.style.display = "none";
+    });
+
+    var el = document.getElementById(id);
+    el.style.display = (el.style.display === "block") ? "none" : "block";
 }
 
-function canli() {
-    let h = document.getElementById("harita");
-    h.style.display = "block";
-    h.src = "https://uym.ibb.gov.tr/yharita6/";
+function trafikAc() {
+    window.open("https://uym.ibb.gov.tr/anasayfa", "_blank");
 }
 
-function mobese() {
+function googleTrafik() {
+    window.open("https://www.google.com/maps/@41.0082,28.9784,10z/data=!5m1!1e1", "_blank");
+}
+
+function mobeseAc() {
     window.open("https://uym.ibb.gov.tr/yharita6/", "_blank");
+}
+
+function call(num) {
+    window.location.href = "tel:" + num;
 }
 
 </script>
