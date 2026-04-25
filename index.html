@@ -34,12 +34,13 @@ body {
     cursor: pointer;
 }
 
+/* BAŞTA GİZLİ */
 iframe {
     width: 95%;
     height: 400px;
     border: none;
     margin: 20px auto;
-    display: block;
+    display: none;
     border-radius: 15px;
 }
 </style>
@@ -59,24 +60,22 @@ iframe {
 <button class="btn" onclick="canli()">Canlı Trafik (Yoğunluk)</button>
 <button class="btn" onclick="mobese()">Canlı Kameralar (MOBESE)</button>
 
-<!-- HARİTA -->
-<iframe id="harita" src="https://sehirharitasi.ibb.gov.tr/"></iframe>
+<iframe id="harita"></iframe>
 
 <script>
 
-// Trafik haritası
 function trafik() {
-    document.getElementById("harita").src =
-    "https://sehirharitasi.ibb.gov.tr/";
+    let h = document.getElementById("harita");
+    h.style.display = "block";
+    h.src = "https://sehirharitasi.ibb.gov.tr/";
 }
 
-// Yoğunluk haritası
 function canli() {
-    document.getElementById("harita").src =
-    "https://uym.ibb.gov.tr/yharita6/";
+    let h = document.getElementById("harita");
+    h.style.display = "block";
+    h.src = "https://uym.ibb.gov.tr/yharita6/";
 }
 
-// MOBESE (tarayıcıda açılır)
 function mobese() {
     window.open("https://uym.ibb.gov.tr/yharita6/", "_blank");
 }
