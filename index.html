@@ -8,167 +8,174 @@
 <style>
 body {
     font-family: Arial;
-    background: #f2f2f2;
     text-align: center;
+    background: #f2f2f2;
 }
 
-.header {
+h1 {
     background: linear-gradient(to right, #00c6ff, #0072ff);
     color: white;
     padding: 20px;
-    font-size: 24px;
-    border-radius: 0 0 20px 20px;
+    border-radius: 20px;
 }
 
 button {
     width: 85%;
     padding: 15px;
-    margin: 10px;
+    margin: 8px;
     border: none;
-    border-radius: 25px;
+    border-radius: 30px;
+    font-size: 16px;
     background: #8B4513;
     color: white;
-    font-size: 16px;
 }
 
 .back {
     background: #333;
 }
 
-.acil {
-    background: red;
+.box {
+    background: white;
+    padding: 15px;
+    border-radius: 15px;
+    margin: 10px;
+    text-align: left;
 }
 </style>
 
 <script>
-function git(link){
-    window.location.href = link;
+function openPage(page) {
+    document.getElementById("main").style.display="none";
+    document.getElementById(page).style.display="block";
 }
 
-/* 🔥 DÜZELTİLDİ: direkt HARİTA açar */
-function harita(q){
-    window.location.href = "https://www.google.com/maps?q=" + encodeURIComponent(q);
+function back() {
+    let pages=document.querySelectorAll(".page");
+    pages.forEach(p=>p.style.display="none");
+    document.getElementById("main").style.display="block";
 }
 
-function sayfa(secim){
-
-let alan = document.getElementById("icerik");
-
-if(secim=="gunluk"){
-alan.innerHTML = `
-<button onclick="git('https://www.turkiye.gov.tr/saglik-bakanligi-nobetci-eczane-sorgulama')">Nöbetçi Eczaneler</button>
-<button onclick="git('https://www.google.com/maps/search/nöbetçi+eczane+istanbul')">Nöbetçi Eczane Harita</button>
-<button onclick="git('https://www.mgm.gov.tr/tahmin/il-ve-ilceler.aspx?il=Istanbul')">Hava Durumu</button>
-
-<button class="back" onclick="anasayfa()">← Geri</button>
-`;
-}
-
-if(secim=="ulasim"){
-alan.innerHTML = `
-<button onclick="git('https://iett.istanbul/')">İETT</button>
-<button onclick="git('https://www.metro.istanbul/Home/Index')">Metro</button>
-
-<button class="back" onclick="anasayfa()">← Geri</button>
-`;
-}
-
-if(secim=="trafik"){
-alan.innerHTML = `
-<button onclick="git('https://uym.ibb.gov.tr/yharita6/')">Canlı Trafik</button>
-<button onclick="git('https://uym.ibb.gov.tr/')">Trafik Haritası</button>
-<button onclick="git('https://www.ibb.istanbul/')">İBB Duyurular</button>
-
-<button class="back" onclick="anasayfa()">← Geri</button>
-`;
-}
-
-if(secim=="belediye"){
-alan.innerHTML = `
-<button onclick="git('https://www.turkiye.gov.tr/')">E-Devlet</button>
-<button onclick="git('https://ivd.gib.gov.tr/')">Vergi & Ceza</button>
-
-<button class="back" onclick="anasayfa()">← Geri</button>
-`;
-}
-
-/* 🔥 HARİTA ARTIK DİREKT KONUM AÇAR */
-if(secim=="gezilecek"){
-alan.innerHTML = `
-<button onclick="harita('Ayasofya İstanbul')">Ayasofya</button>
-<button onclick="harita('Topkapı Sarayı İstanbul')">Topkapı Sarayı</button>
-<button onclick="harita('Dolmabahçe Sarayı İstanbul')">Dolmabahçe Sarayı</button>
-<button onclick="harita('Galata Kulesi İstanbul')">Galata Kulesi</button>
-<button onclick="harita('Yerebatan Sarnıcı İstanbul')">Yerebatan Sarnıcı</button>
-<button onclick="harita('Kız Kulesi İstanbul')">Kız Kulesi</button>
-<button onclick="harita('Miniatürk İstanbul')">Miniatürk</button>
-<button onclick="harita('Pierre Loti Tepesi İstanbul')">Pierre Loti</button>
-<button onclick="harita('Emirgan Korusu İstanbul')">Emirgan Korusu</button>
-<button onclick="harita('Gülhane Parkı İstanbul')">Gülhane Parkı</button>
-
-<button class="back" onclick="anasayfa()">← Geri</button>
-`;
-}
-
-/* ✅ ACİL İLETİŞİM GERİ GELDİ */
-if(secim=="acil"){
-alan.innerHTML = `
-<button class="acil" onclick="git('tel:112')">🚑 112 Ambulans</button>
-<button class="acil" onclick="git('tel:155')">🚓 155 Polis</button>
-<button class="acil" onclick="git('tel:110')">🚒 110 İtfaiye</button>
-<button class="acil" onclick="git('tel:183')">📞 Sosyal Destek</button>
-
-<button class="back" onclick="anasayfa()">← Geri</button>
-`;
-}
-
-/* ✅ HAKKIMDA GERİ GELDİ */
-if(secim=="hakkimda"){
-alan.innerHTML = `
-<div style="padding:20px; text-align:left;">
-<h3>İstanbul Sende</h3>
-
-<p>İstanbul Sende, İstanbul’da yaşayan bireylerin günlük ihtiyaçlarına hızlı, pratik ve güvenilir çözümler sunmak amacıyla geliştirilmiş bir dijital platformdur.</p>
-
-<p>Bu uygulama; nöbetçi eczane, hava durumu, trafik, ulaşım ve resmi hizmetlere tek noktadan erişim sağlar.</p>
-
-<p><b>Not:</b> Uygulama resmi kurumlara ait değildir. Sadece ilgili resmi web sitelerine yönlendirme yapar.</p>
-
-</div>
-
-<button class="back" onclick="anasayfa()">← Geri</button>
-`;
-}
-
-}
-
-function anasayfa(){
-document.getElementById("icerik").innerHTML = `
-<button onclick="sayfa('gunluk')">Günlük Hayat</button>
-<button onclick="sayfa('ulasim')">Ulaşım</button>
-<button onclick="sayfa('trafik')">Trafik Durumu</button>
-<button onclick="sayfa('belediye')">Belediye Hizmetleri</button>
-<button onclick="sayfa('gezilecek')">Gezilecek Yerler</button>
-<button onclick="sayfa('acil')">Acil İletişim</button>
-<button onclick="sayfa('hakkimda')">Hakkımda</button>
-`;
+function openMap(query){
+    window.open("https://www.google.com/maps/search/?api=1&query="+query,"_blank");
 }
 </script>
-
 </head>
 
 <body>
 
-<div class="header">İstanbul Sende</div>
+<h1>İstanbul Sende</h1>
 
-<div id="icerik">
-<button onclick="sayfa('gunluk')">Günlük Hayat</button>
-<button onclick="sayfa('ulasim')">Ulaşım</button>
-<button onclick="sayfa('trafik')">Trafik Durumu</button>
-<button onclick="sayfa('belediye')">Belediye Hizmetleri</button>
-<button onclick="sayfa('gezilecek')">Gezilecek Yerler</button>
-<button onclick="sayfa('acil')">Acil İletişim</button>
-<button onclick="sayfa('hakkimda')">Hakkımda</button>
+<div id="main">
+
+<button onclick="openPage('gunluk')">Günlük Yaşam</button>
+<button onclick="openPage('ulasim')">Ulaşım</button>
+<button onclick="openPage('trafik')">Trafik</button>
+<button onclick="openPage('belediye')">Belediye Hizmetleri</button>
+<button onclick="openPage('gezilecek')">Gezilecek Yerler</button>
+<button onclick="openPage('acil')">Acil İletişim</button>
+<button onclick="openPage('hakkimda')">Hakkımda</button>
+
+</div>
+
+<!-- GÜNLÜK -->
+<div id="gunluk" class="page" style="display:none;">
+<button onclick="window.open('https://www.eczaneler.gen.tr/nobetci-istanbul-sultanbeyli')">Nöbetçi Eczaneler</button>
+<button onclick="window.open('https://www.google.com/maps/search/nöbetçi+eczane')">Eczane Haritası</button>
+<button onclick="window.open('https://www.mgm.gov.tr')">Hava Durumu</button>
+<br><button class="back" onclick="back()">← Geri</button>
+</div>
+
+<!-- ULAŞIM -->
+<div id="ulasim" class="page" style="display:none;">
+<button onclick="window.open('https://iett.istanbul/')">İETT Saatleri</button>
+<button onclick="window.open('https://www.metro.istanbul/Home/Index')">Metro Saatleri</button>
+<br><button class="back" onclick="back()">← Geri</button>
+</div>
+
+<!-- TRAFİK -->
+<div id="trafik" class="page" style="display:none;">
+<button onclick="window.open('https://www.google.com/maps/@41.0082,28.9784,12z/data=!5m1!1e1')">Canlı Trafik Yoğunluk</button>
+<button onclick="window.open('https://www.google.com/maps')">Trafik Haritası</button>
+<button onclick="window.open('https://uym.ibb.gov.tr/')">İBB Trafik Sistemi (UYM)</button>
+<button onclick="window.open('https://www.ibb.istanbul/')">İBB Duyurular</button>
+<br><button class="back" onclick="back()">← Geri</button>
+</div>
+
+<!-- BELEDİYE -->
+<div id="belediye" class="page" style="display:none;">
+<button onclick="window.open('https://www.turkiye.gov.tr/')">E-Devlet</button>
+<button onclick="window.open('https://ivd.gib.gov.tr/')">Vergi & Ceza</button>
+<br><button class="back" onclick="back()">← Geri</button>
+</div>
+
+<!-- GEZİLECEK -->
+<div id="gezilecek" class="page" style="display:none;">
+<button onclick="openMap('Ayasofya')">Ayasofya</button>
+<button onclick="openMap('Topkapı Sarayı')">Topkapı Sarayı</button>
+<button onclick="openMap('Dolmabahçe Sarayı')">Dolmabahçe Sarayı</button>
+<button onclick="openMap('Galata Kulesi')">Galata Kulesi</button>
+<button onclick="openMap('Yerebatan Sarnıcı')">Yerebatan Sarnıcı</button>
+<button onclick="openMap('İstanbul Arkeoloji Müzesi')">Arkeoloji Müzesi</button>
+<button onclick="openMap('Rahmi Koç Müzesi')">Rahmi Koç Müzesi</button>
+<button onclick="openMap('Miniatürk')">Miniatürk</button>
+<button onclick="openMap('Pera Müzesi')">Pera Müzesi</button>
+<button onclick="openMap('Sakıp Sabancı Müzesi')">Sabancı Müzesi</button>
+<button onclick="openMap('Panorama 1453')">Panorama 1453</button>
+<button onclick="openMap('İstanbul Modern')">İstanbul Modern</button>
+<button onclick="openMap('Pierre Loti Tepesi')">Pierre Loti</button>
+<button onclick="openMap('Kız Kulesi')">Kız Kulesi</button>
+
+<br><button class="back" onclick="back()">← Geri</button>
+</div>
+
+<!-- ACİL -->
+<div id="acil" class="page" style="display:none;">
+<button onclick="window.location.href='tel:112'">🚑 Ambulans 112</button>
+<button onclick="window.location.href='tel:155'">👮 Polis 155</button>
+<button onclick="window.location.href='tel:110'">🔥 İtfaiye 110</button>
+<button onclick="window.location.href='tel:156'">🚓 Jandarma 156</button>
+
+<br><button class="back" onclick="back()">← Geri</button>
+</div>
+
+<!-- HAKKIMDA -->
+<div id="hakkimda" class="page" style="display:none;">
+<div class="box">
+
+<h2>İstanbul Sende</h2>
+
+<p>İstanbul Sende, İstanbul’da yaşayan herkesin günlük ihtiyaçlarına hızlı, pratik ve güvenilir çözümler sunmak amacıyla geliştirilmiş bir dijital bilgi platformudur.</p>
+
+<p>Farklı kaynaklarda dağınık halde bulunan şehir bilgilerini tek bir çatı altında toplayarak kullanıcıların zaman kaybını önlemeyi hedefler.</p>
+
+<p>Bu platform üzerinden:</p>
+
+<ul>
+<li>Nöbetçi eczaneler</li>
+<li>Hava durumu</li>
+<li>Trafik ve ulaşım bilgileri</li>
+<li>Acil iletişim numaraları</li>
+<li>E-Devlet ve resmi hizmetler</li>
+</ul>
+
+<p>gibi birçok bilgiye hızlıca erişebilirsiniz.</p>
+
+<h3>Neden İstanbul Sende?</h3>
+
+<ul>
+<li>Tek sayfada sade kullanım</li>
+<li>Hızlı ve pratik erişim</li>
+<li>Mobil uyumlu yapı</li>
+<li>Ücretsiz ve reklamsız</li>
+</ul>
+
+<p><b>Not:</b> Bu uygulama, resmi kurumlara ait değildir. Sadece ilgili hizmetlere yönlendirme sağlar.</p>
+
+<p><b>Geliştirici:</b> İstanbul Sende</p>
+
+</div>
+
+<br><button class="back" onclick="back()">← Geri</button>
 </div>
 
 </body>
