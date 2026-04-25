@@ -7,142 +7,174 @@
 
 <style>
 body {
-    font-family: Arial;
+    font-family: Arial, sans-serif;
     background: #f2f2f2;
+    margin: 0;
     text-align: center;
 }
 
-h1 {
+.header {
     background: linear-gradient(to right, #00c6ff, #0072ff);
     color: white;
-    padding: 15px;
-    border-radius: 10px;
+    padding: 20px;
+    font-size: 26px;
+    font-weight: bold;
+    border-radius: 0 0 20px 20px;
 }
 
-button {
-    width: 90%;
+.button {
+    display: block;
+    width: 85%;
+    margin: 12px auto;
     padding: 15px;
-    margin: 10px;
+    background: #8B4513;
+    color: white;
     border: none;
     border-radius: 30px;
-    background: #8b4513;
-    color: white;
-    font-size: 16px;
+    font-size: 18px;
+    cursor: pointer;
 }
 
-.menu {
-    display: none;
+.button:hover {
+    background: #a0522d;
 }
 
 .box {
     display: none;
-    padding: 15px;
-    background: white;
+}
+
+.back {
     margin: 10px;
-    border-radius: 10px;
-    text-align: left;
+    background: #333;
 }
 </style>
-</head>
 
+<script>
+function ac(id) {
+    document.getElementById("menu").style.display = "none";
+    document.querySelectorAll('.box').forEach(el => el.style.display='none');
+    document.getElementById(id).style.display = 'block';
+}
+
+function geri() {
+    document.getElementById("menu").style.display = "block";
+    document.querySelectorAll('.box').forEach(el => el.style.display='none');
+}
+</script>
+
+</head>
 <body>
 
-<h1>İstanbul Sende</h1>
+<div class="header">İstanbul Sende</div>
 
-<!-- GÜNLÜK -->
-<button onclick="toggle('gunluk')">Günlük Hayat</button>
-<div id="gunluk" class="menu">
-    <button onclick="go('https://www.eczaneler.gen.tr/')">Nöbetçi Eczaneler</button>
-    <button onclick="go('https://www.google.com/maps/search/nöbetçi+eczane')">Nöbetçi Eczane (Harita)</button>
-    <button onclick="go('https://www.mgm.gov.tr/?il=Istanbul')">Hava Durumu</button>
+<!-- ANA MENÜ -->
+<div id="menu">
+
+<button class="button" onclick="ac('gunluk')">Günlük Hayat</button>
+<button class="button" onclick="window.open('https://www.iett.istanbul/', '_blank')">Ulaşım</button>
+<button class="button" onclick="ac('gezi')">Gezilecek Yerler</button>
+<button class="button" onclick="ac('acil')">Acil İletişim</button>
+<button class="button" onclick="ac('trafik')">Trafik Durumu</button>
+<button class="button" onclick="ac('belediye')">Belediye Hizmetleri</button>
+<button class="button" onclick="ac('hakkinda')">Hakkımda</button>
+
 </div>
 
-<!-- ULAŞIM -->
-<button onclick="toggle('ulasim')">Ulaşım</button>
-<div id="ulasim" class="menu">
-    <button onclick="go('https://iett.istanbul')">İETT</button>
-    <button onclick="go('https://www.metro.istanbul')">Metro</button>
+<!-- GÜNLÜK -->
+<div id="gunluk" class="box">
+<button class="button back" onclick="geri()">⬅ Geri</button>
+
+<button class="button" onclick="window.open('https://www.eczaneler.gen.tr/', '_blank')">
+Nöbetçi Eczaneler
+</button>
+
+<button class="button" onclick="window.open('https://www.google.com/maps/search/n%C3%B6bet%C3%A7i+eczane', '_blank')">
+Nöbetçi Eczane (Harita)
+</button>
+
+<button class="button" onclick="window.open('https://www.mgm.gov.tr/?il=Istanbul', '_blank')">
+Hava Durumu
+</button>
 </div>
 
 <!-- GEZİ -->
-<button onclick="toggle('gezilecek')">Gezilecek Yerler</button>
-<div id="gezilecek" class="menu">
-    <button onclick="alert('Ayasofya - Tarihi yapı\nKonum açılıyor') ; go('https://www.google.com/maps?q=Ayasofya')">Ayasofya</button>
-    <button onclick="alert('Galata Kulesi - Tarihi yapı\nKonum açılıyor'); go('https://www.google.com/maps?q=Galata+Kulesi')">Galata Kulesi</button>
-    <button onclick="alert('Topkapı Sarayı - Müze\nKonum açılıyor'); go('https://www.google.com/maps?q=Topkapı+Sarayı')">Topkapı Sarayı</button>
-    <button onclick="go('https://tr.wikipedia.org/wiki/%C4%B0stanbul%27daki_m%C3%BCzeler_listesi')">Tüm Müzeler</button>
+<div id="gezi" class="box">
+<button class="button back" onclick="geri()">⬅ Geri</button>
+
+<button class="button" onclick="window.open('https://www.google.com/maps/search/ayasofya', '_blank')">
+Ayasofya
+</button>
+
+<button class="button" onclick="window.open('https://www.google.com/maps/search/galata+kulesi', '_blank')">
+Galata Kulesi
+</button>
 </div>
 
 <!-- ACİL -->
-<button onclick="toggle('acil')">Acil İletişim</button>
-<div id="acil" class="menu">
-    <button onclick="call('112')">112 Acil</button>
-    <button onclick="call('155')">Polis</button>
+<div id="acil" class="box">
+<button class="button back" onclick="geri()">⬅ Geri</button>
+
+<button class="button" onclick="window.location.href='tel:112'">112 Acil</button>
+<button class="button" onclick="window.location.href='tel:155'">Polis</button>
 </div>
 
 <!-- TRAFİK -->
-<button onclick="toggle('trafik')">Trafik Durumu</button>
-<div id="trafik" class="menu">
-    <button onclick="go('https://www.google.com/maps/@41.0082,28.9784,10z/data=!5m1!1e1')">Canlı Trafik</button>
-    <button onclick="go('https://uym.ibb.gov.tr/')">İBB Trafik Duyuru</button>
-    <button onclick="go('https://uym.ibb.gov.tr/')">Canlı MOBESE</button>
+<div id="trafik" class="box">
+<button class="button back" onclick="geri()">⬅ Geri</button>
+
+<button class="button" onclick="window.open('https://uym.ibb.gov.tr/', '_blank')">
+İBB Trafik Duyuru
+</button>
+
+<button class="button" onclick="window.open('https://uym.ibb.gov.tr/yharita6/', '_blank')">
+Canlı Kameralar (MOBESE)
+</button>
 </div>
 
 <!-- BELEDİYE -->
-<button onclick="toggle('belediye')">Belediye Hizmetleri</button>
-<div id="belediye" class="menu">
-    <button onclick="go('https://www.turkiye.gov.tr/')">E-Devlet Giriş</button>
-    <button onclick="go('https://www.turkiye.gov.tr/')">Vergi / Ceza</button>
-    <button onclick="go('https://hgsmusteri.ptt.gov.tr/mobil/hgs.jsf')">HGS Bakiye</button>
-    <button onclick="go('https://www.turkiye.gov.tr/icisleri-e-basvuru')">Online Başvuru</button>
+<div id="belediye" class="box">
+<button class="button back" onclick="geri()">⬅ Geri</button>
+
+<button class="button" onclick="window.open('https://www.turkiye.gov.tr/', '_blank')">
+Vergi & Ceza (e-Devlet)
+</button>
+
+<button class="button" onclick="window.open('https://hgsmusteri.ptt.gov.tr/mobil/hgs.jsf', '_blank')">
+HGS Bakiye
+</button>
+
+<button class="button" onclick="window.open('https://www.turkiye.gov.tr/icisleri-e-basvuru', '_blank')">
+Online Başvuru
+</button>
 </div>
 
 <!-- HAKKINDA -->
-<button onclick="toggle('hakkinda')">Hakkımda</button>
 <div id="hakkinda" class="box">
+<button class="button back" onclick="geri()">⬅ Geri</button>
 
-<h3>İstanbul Sende</h3>
+<div style="background:white; padding:15px; border-radius:15px;">
 
-<p>İstanbul Sende, İstanbul’da yaşayanların günlük ihtiyaçlarına hızlı ve güvenilir çözümler sunan bir platformdur.</p>
+<h2>İstanbul Sende</h2>
 
-<p>Amacımız, dağınık bilgileri tek bir yerde toplayarak kullanıcıların zamandan tasarruf etmesini sağlamaktır.</p>
+<p>
+İstanbul Sende, İstanbul’da yaşayan herkesin günlük ihtiyaçlarına hızlı, pratik ve güvenilir çözümler sunan dijital bir platformdur.
+</p>
 
-<p>Bu platform ile:</p>
+<p>
+Dağınık bilgileri tek yerde toplar ve kullanıcıya hızlı erişim sağlar.
+</p>
 
+<h3>Neden?</h3>
 <ul>
-<li>Nöbetçi eczaneleri bulabilirsiniz</li>
-<li>Hava durumunu öğrenebilirsiniz</li>
-<li>Trafik ve ulaşım bilgilerine ulaşabilirsiniz</li>
-<li>Acil numaralara tek tıkla erişebilirsiniz</li>
-<li>E-Devlet ve resmi işlemleri kolayca yapabilirsiniz</li>
+<li>✔ Tek sayfa</li>
+<li>✔ Hızlı kullanım</li>
+<li>✔ Güvenilir linkler</li>
+<li>✔ Mobil uyumlu</li>
 </ul>
-
-<p><b>Neden İstanbul Sende?</b></p>
-<ul>
-<li>Hızlı ve sade kullanım</li>
-<li>Mobil uyumlu</li>
-<li>Güvenilir bağlantılar</li>
-<li>Ücretsiz ve reklamsız</li>
-</ul>
-
-<p><b>Geliştirici:</b> İstanbul Sende</p>
 
 </div>
 
-<script>
-function toggle(id) {
-    var x = document.getElementById(id);
-    x.style.display = x.style.display === "block" ? "none" : "block";
-}
-
-function go(link) {
-    window.location.href = link;
-}
-
-function call(num) {
-    window.location.href = "tel:" + num;
-}
-</script>
+</div>
 
 </body>
 </html>
