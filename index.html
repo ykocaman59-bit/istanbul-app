@@ -10,110 +10,138 @@ body {
     margin: 0;
     font-family: Arial;
     background: #f2f2f2;
-    text-align: center;
 }
 
-.header {
+header {
     background: linear-gradient(to right, #00c6ff, #0072ff);
     color: white;
+    text-align: center;
     padding: 20px;
-    font-size: 24px;
-    font-weight: bold;
+    font-size: 22px;
 }
 
-.btn {
-    width: 85%;
-    margin: 10px auto;
+.container {
     padding: 15px;
-    background: #7a3e1d;
-    color: white;
+}
+
+button {
+    width: 100%;
+    padding: 15px;
+    margin: 10px 0;
     border: none;
     border-radius: 25px;
+    background: #7a3e1d;
+    color: white;
     font-size: 18px;
-    display: block;
-    cursor: pointer;
 }
 
-.btn:hover {
-    opacity: 0.9;
-}
-
-.alt-menu {
-    display: none;
-    margin-bottom: 10px;
-}
-
-.alt-menu button {
-    background: #a55a2a;
-    font-size: 16px;
+.back {
+    background: #444;
 }
 </style>
 </head>
 
 <body>
 
-<div class="header">İstanbul Sende</div>
+<header>İstanbul Sende</header>
 
-<!-- ANA BUTONLAR -->
-<button class="btn" onclick="toggleMenu('gunluk')">Günlük Hayat</button>
-<div id="gunluk" class="alt-menu">
-    <button class="btn" onclick="alert('Nöbetçi eczaneler yakında')">Nöbetçi Eczaneler</button>
-    <button class="btn" onclick="alert('Hava durumu yakında')">Hava Durumu</button>
-</div>
+<div class="container" id="menu"></div>
 
-<button class="btn" onclick="toggleMenu('ulasim')">Ulaşım</button>
-<div id="ulasim" class="alt-menu">
-    <button class="btn" onclick="window.open('https://iett.istanbul', '_blank')">İETT</button>
-    <button class="btn" onclick="window.open('https://metro.istanbul', '_blank')">Metro</button>
-</div>
-
-<button class="btn" onclick="toggleMenu('gezilecek')">Gezilecek Yerler</button>
-<div id="gezilecek" class="alt-menu">
-    <button class="btn" onclick="window.open('https://www.google.com/maps?q=Ayasofya', '_blank')">Ayasofya</button>
-    <button class="btn" onclick="window.open('https://www.google.com/maps?q=Galata+Kulesi', '_blank')">Galata Kulesi</button>
-</div>
-
-<button class="btn" onclick="toggleMenu('acil')">Acil İletişim</button>
-<div id="acil" class="alt-menu">
-    <button class="btn" onclick="call('112')">112 Acil</button>
-    <button class="btn" onclick="call('155')">Polis</button>
-</div>
-
-<!-- TRAFİK -->
-<button class="btn" onclick="trafikAc()">Trafik Durumu</button>
-
-<button class="btn" onclick="googleTrafik()">Canlı Trafik (Yoğunluk)</button>
-
-<button class="btn" onclick="mobeseAc()">Canlı Kameralar (MOBESE)</button>
-
-<!-- JS -->
 <script>
 
-function toggleMenu(id) {
-    var menus = document.querySelectorAll(".alt-menu");
-    menus.forEach(m => {
-        if (m.id !== id) m.style.display = "none";
-    });
-
-    var el = document.getElementById(id);
-    el.style.display = (el.style.display === "block") ? "none" : "block";
+function anaMenu() {
+document.getElementById("menu").innerHTML = `
+<button onclick="gunluk()">Günlük Hayat</button>
+<button onclick="ulasim()">Ulaşım</button>
+<button onclick="gezilecek()">Gezilecek Yerler</button>
+<button onclick="acil()">Acil İletişim</button>
+<button onclick="trafik()">Trafik Durumu</button>
+<button onclick="maps()">Canlı Trafik (Yoğunluk)</button>
+<button onclick="mobese()">Canlı Kameralar (MOBESE)</button>
+<button onclick="hizmet()">Belediye Hizmetleri</button>
+`;
 }
 
-function trafikAc() {
-    window.open("https://uym.ibb.gov.tr/anasayfa", "_blank");
+function geri() {
+    anaMenu();
 }
 
-function googleTrafik() {
-    window.open("https://www.google.com/maps/@41.0082,28.9784,10z/data=!5m1!1e1", "_blank");
+function gunluk() {
+document.getElementById("menu").innerHTML = `
+<button onclick="eczane()">Nöbetçi Eczane</button>
+<button onclick="hava()">Hava Durumu</button>
+<button class="back" onclick="geri()">← Geri</button>
+`;
 }
 
-function mobeseAc() {
-    window.open("https://uym.ibb.gov.tr/yharita6/", "_blank");
+function ulasim() {
+document.getElementById("menu").innerHTML = `
+<button onclick="window.open('https://iett.istanbul')">İETT</button>
+<button onclick="window.open('https://metro.istanbul')">Metro</button>
+<button class="back" onclick="geri()">← Geri</button>
+`;
 }
 
-function call(num) {
-    window.location.href = "tel:" + num;
+function gezilecek() {
+document.getElementById("menu").innerHTML = `
+<button onclick="harita('Ayasofya İstanbul')">Ayasofya</button>
+<button onclick="harita('Galata Kulesi İstanbul')">Galata Kulesi</button>
+<button class="back" onclick="geri()">← Geri</button>
+`;
 }
+
+function acil() {
+document.getElementById("menu").innerHTML = `
+<button onclick="tel('112')">🚑 112 Acil</button>
+<button onclick="tel('155')">👮 Polis</button>
+<button class="back" onclick="geri()">← Geri</button>
+`;
+}
+
+function hizmet() {
+document.getElementById("menu").innerHTML = `
+<button onclick="window.open('https://www.turkiye.gov.tr')">E-Devlet</button>
+<button onclick="window.open('https://ivd.gib.gov.tr')">Vergi</button>
+<button onclick="window.open('https://hgsmusteri.ptt.gov.tr')">HGS/OGS</button>
+<button onclick="window.open('https://www.turkiye.gov.tr/egm-trafik-cezasi-sorgulama')">Ceza</button>
+<button onclick="window.open('https://www.ibb.istanbul')">İBB</button>
+<button onclick="window.open('https://basvuru.ibb.gov.tr')">Başvuru</button>
+<button class="back" onclick="geri()">← Geri</button>
+`;
+}
+
+/* DIŞ İŞLEMLER */
+
+function harita(q) {
+    window.open("https://www.google.com/maps/search/" + q);
+}
+
+function tel(numara) {
+    window.location.href = "tel:" + numara;
+}
+
+function trafik() {
+    window.open("https://uym.ibb.gov.tr/yharita/");
+}
+
+function maps() {
+    window.open("https://www.google.com/maps");
+}
+
+function mobese() {
+    window.open("https://uym.ibb.gov.tr/yharita/");
+}
+
+function eczane() {
+    window.open("https://www.google.com/maps/search/nöbetçi+eczane+yakınımda");
+}
+
+function hava() {
+    window.open("https://www.google.com/search?q=istanbul+hava+durumu");
+}
+
+/* BAŞLANGIÇ */
+anaMenu();
 
 </script>
 
