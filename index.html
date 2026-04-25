@@ -4,6 +4,9 @@
   <meta charset="UTF-8">
   <title>İstanbul Sende</title>
   <link rel="stylesheet" href="style.css">
+
+  <!-- Harita CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
 </head>
 <body>
 
@@ -20,10 +23,20 @@
     <p>Tarihi ve büyüleyici yapı</p>
   </div>
 
+  <div class="card">
+    <h3>Taksim Meydanı</h3>
+    <p>İstanbul’un kalbi</p>
+  </div>
+
+  <h2>Harita</h2>
+  <div id="map"></div>
 </section>
 
 <button onclick="mesaj()">Tıkla</button>
 
+<!-- Harita JS -->
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 <script src="script.js"></script>
+
 </body>
 </html>
