@@ -7,7 +7,7 @@
 
 <style>
 body {
-    font-family: Arial, sans-serif;
+    font-family: Arial;
     background: #f2f2f2;
     margin: 0;
     text-align: center;
@@ -18,7 +18,6 @@ body {
     color: white;
     padding: 20px;
     font-size: 26px;
-    font-weight: bold;
     border-radius: 0 0 20px 20px;
 }
 
@@ -35,17 +34,14 @@ body {
     cursor: pointer;
 }
 
-.button:hover {
-    background: #a0522d;
-}
-
 .box {
     display: none;
+    padding-bottom: 60px;
 }
 
 .back {
-    margin: 10px;
     background: #333;
+    margin-top: 20px;
 }
 </style>
 
@@ -71,108 +67,142 @@ function geri() {
 <div id="menu">
 
 <button class="button" onclick="ac('gunluk')">Günlük Hayat</button>
-<button class="button" onclick="window.open('https://www.iett.istanbul/', '_blank')">Ulaşım</button>
+
+<button class="button" onclick="ac('ulasim')">Ulaşım</button>
+
 <button class="button" onclick="ac('gezi')">Gezilecek Yerler</button>
+
 <button class="button" onclick="ac('acil')">Acil İletişim</button>
+
 <button class="button" onclick="ac('trafik')">Trafik Durumu</button>
+
 <button class="button" onclick="ac('belediye')">Belediye Hizmetleri</button>
+
 <button class="button" onclick="ac('hakkinda')">Hakkımda</button>
 
 </div>
 
 <!-- GÜNLÜK -->
 <div id="gunluk" class="box">
+
+<button class="button" onclick="window.open('https://www.eczaneler.gen.tr/', '_blank')">Nöbetçi Eczaneler</button>
+
+<button class="button" onclick="window.open('https://www.google.com/maps/search/n%C3%B6bet%C3%A7i+eczane', '_blank')">Nöbetçi Eczane (Harita)</button>
+
+<button class="button" onclick="window.open('https://www.mgm.gov.tr/?il=Istanbul', '_blank')">Hava Durumu</button>
+
 <button class="button back" onclick="geri()">⬅ Geri</button>
+</div>
 
-<button class="button" onclick="window.open('https://www.eczaneler.gen.tr/', '_blank')">
-Nöbetçi Eczaneler
-</button>
+<!-- ULAŞIM -->
+<div id="ulasim" class="box">
 
-<button class="button" onclick="window.open('https://www.google.com/maps/search/n%C3%B6bet%C3%A7i+eczane', '_blank')">
-Nöbetçi Eczane (Harita)
-</button>
+<button class="button" onclick="window.open('https://www.iett.istanbul/tr/main/hatlar', '_blank')">İETT Otobüs Saatleri</button>
 
-<button class="button" onclick="window.open('https://www.mgm.gov.tr/?il=Istanbul', '_blank')">
-Hava Durumu
-</button>
+<button class="button" onclick="window.open('https://www.metro.istanbul/sefer-durumlari', '_blank')">Metro Saatleri</button>
+
+<button class="button back" onclick="geri()">⬅ Geri</button>
 </div>
 
 <!-- GEZİ -->
 <div id="gezi" class="box">
+
+<button class="button" onclick="window.open('https://www.google.com/maps/search/ayasofya', '_blank')">Ayasofya</button>
+
+<button class="button" onclick="window.open('https://www.google.com/maps/search/galata+kulesi', '_blank')">Galata Kulesi</button>
+
 <button class="button back" onclick="geri()">⬅ Geri</button>
-
-<button class="button" onclick="window.open('https://www.google.com/maps/search/ayasofya', '_blank')">
-Ayasofya
-</button>
-
-<button class="button" onclick="window.open('https://www.google.com/maps/search/galata+kulesi', '_blank')">
-Galata Kulesi
-</button>
 </div>
 
 <!-- ACİL -->
 <div id="acil" class="box">
-<button class="button back" onclick="geri()">⬅ Geri</button>
 
 <button class="button" onclick="window.location.href='tel:112'">112 Acil</button>
+
 <button class="button" onclick="window.location.href='tel:155'">Polis</button>
+
+<button class="button back" onclick="geri()">⬅ Geri</button>
 </div>
 
 <!-- TRAFİK -->
 <div id="trafik" class="box">
+
+<button class="button" onclick="window.open('https://uym.ibb.gov.tr/', '_blank')">İBB Trafik Duyuru</button>
+
+<button class="button" onclick="window.open('https://uym.ibb.gov.tr/yharita6/', '_blank')">Canlı MOBESE</button>
+
+<button class="button" onclick="window.open('https://www.google.com/maps/@41.015137,28.979530,12z/data=!5m1!1e1', '_blank')">
+Trafik Haritası
+</button>
+
+<button class="button" onclick="window.open('https://www.google.com/maps?layer=t', '_blank')">
+Canlı Trafik Yoğunluk
+</button>
+
 <button class="button back" onclick="geri()">⬅ Geri</button>
-
-<button class="button" onclick="window.open('https://uym.ibb.gov.tr/', '_blank')">
-İBB Trafik Duyuru
-</button>
-
-<button class="button" onclick="window.open('https://uym.ibb.gov.tr/yharita6/', '_blank')">
-Canlı Kameralar (MOBESE)
-</button>
 </div>
 
 <!-- BELEDİYE -->
 <div id="belediye" class="box">
+
+<button class="button" onclick="window.open('https://www.turkiye.gov.tr/', '_blank')">E-Devlet Girişi</button>
+
+<button class="button" onclick="window.open('https://www.turkiye.gov.tr/', '_blank')">Vergi & Ceza</button>
+
+<button class="button" onclick="window.open('https://hgsmusteri.ptt.gov.tr/mobil/hgs.jsf', '_blank')">HGS Bakiye</button>
+
+<button class="button" onclick="window.open('https://www.turkiye.gov.tr/icisleri-e-basvuru', '_blank')">Online Başvuru</button>
+
 <button class="button back" onclick="geri()">⬅ Geri</button>
-
-<button class="button" onclick="window.open('https://www.turkiye.gov.tr/', '_blank')">
-Vergi & Ceza (e-Devlet)
-</button>
-
-<button class="button" onclick="window.open('https://hgsmusteri.ptt.gov.tr/mobil/hgs.jsf', '_blank')">
-HGS Bakiye
-</button>
-
-<button class="button" onclick="window.open('https://www.turkiye.gov.tr/icisleri-e-basvuru', '_blank')">
-Online Başvuru
-</button>
 </div>
 
 <!-- HAKKINDA -->
-<div id="hakkinda" class="box">
-<button class="button back" onclick="geri()">⬅ Geri</button>
-
-<div style="background:white; padding:15px; border-radius:15px;">
+<div id="hakkinda" class="box" style="background:white; margin:10px; border-radius:15px; padding:15px; text-align:left;">
 
 <h2>İstanbul Sende</h2>
 
 <p>
-İstanbul Sende, İstanbul’da yaşayan herkesin günlük ihtiyaçlarına hızlı, pratik ve güvenilir çözümler sunan dijital bir platformdur.
+İstanbul Sende, İstanbul’da yaşayan bireylerin günlük ihtiyaçlarına hızlı, pratik ve güvenilir erişim sağlaması amacıyla geliştirilmiş dijital bir bilgi platformudur.
 </p>
 
 <p>
-Dağınık bilgileri tek yerde toplar ve kullanıcıya hızlı erişim sağlar.
+Platform, farklı resmi kaynaklarda dağınık halde bulunan bilgileri tek bir arayüzde toplayarak kullanıcıların zamandan tasarruf etmesini ve doğru bilgiye kolayca ulaşmasını hedefler.
 </p>
 
-<h3>Neden?</h3>
+<h3>Amacımız</h3>
+<p>
+Kullanıcıların şehir yaşamında ihtiyaç duyduğu temel bilgilere tek noktadan ulaşmasını sağlamak ve bu bilgileri sade, hızlı ve erişilebilir bir şekilde sunmaktır.
+</p>
+
+<h3>Sunulan Hizmetler</h3>
 <ul>
-<li>✔ Tek sayfa</li>
-<li>✔ Hızlı kullanım</li>
-<li>✔ Güvenilir linkler</li>
-<li>✔ Mobil uyumlu</li>
+<li>Nöbetçi eczaneler</li>
+<li>Hava durumu</li>
+<li>Trafik ve ulaşım bilgileri</li>
+<li>Acil iletişim numaraları</li>
+<li>E-Devlet ve resmi işlemler</li>
+<li>Belediye hizmetleri</li>
+<li>İstanbul’un tarihi ve turistik yerleri</li>
 </ul>
 
-</div>
+<h3>Önemli Bilgilendirme</h3>
+<p>
+İstanbul Sende, resmi kurumlara ait bir uygulama değildir. Uygulama, kullanıcıları ilgili resmi ve güvenilir web sitelerine yönlendiren bir aracıdır. Tüm işlemler ilgili kurumların kendi sistemleri üzerinden gerçekleştirilmektedir.
+</p>
+
+<h3>Neden İstanbul Sende?</h3>
+<ul>
+<li>✔ Tek sayfada tüm hizmetler</li>
+<li>✔ Kullanıcı dostu arayüz</li>
+<li>✔ Güncel ve güvenilir yönlendirmeler</li>
+<li>✔ Mobil uyumlu yapı</li>
+<li>✔ Ücretsiz kullanım</li>
+</ul>
+
+<p><b>Geliştirici:</b> İstanbul Sende</p>
+<p><b>Şehir:</b> İstanbul</p>
+
+<button class="button back" onclick="geri()">⬅ Geri</button>
 
 </div>
 
