@@ -1,48 +1,173 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <title>İstanbul Sende</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>İstanbul Sende</title>
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial;
+    background: #f2f2f2;
+}
+
+/* HEADER */
+.header {
+    background: linear-gradient(135deg,#1e90ff,#00c6ff);
+    color: white;
+    text-align: center;
+    padding: 20px;
+    font-size: 22px;
+}
+
+/* BUTTON */
+.btn {
+    display: block;
+    width: 90%;
+    margin: 10px auto;
+    padding: 15px;
+    background: #6b3e26;
+    color: white;
+    border-radius: 10px;
+    text-align: center;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* CARD */
+.card {
+    background: white;
+    margin: 10px;
+    padding: 15px;
+    border-radius: 12px;
+}
+
+/* HARITA */
+#map {
+    height: 300px;
+    margin: 10px;
+    border-radius: 10px;
+}
+
+/* GIZLE */
+.hidden {
+    display: none;
+}
+
+/* ALT MENU (APP GIBI) */
+.menu {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background: white;
+    display: flex;
+    justify-content: space-around;
+    padding: 10px;
+    border-top: 1px solid #ccc;
+}
+.menu div {
+    text-align: center;
+    font-size: 12px;
+}
+</style>
 </head>
+
 <body>
 
-<header>
-  <h1>İstanbul Sende</h1>
-  <p>Şehri keşfet</p>
-</header>
+<div class="header">İstanbul Sende</div>
 
-<section>
+<!-- ANA BUTONLAR -->
+<a class="btn" onclick="toggle('gunluk')">Günlük Hayat</a>
+<a class="btn" onclick="toggle('ulasim')">Ulaşım</a>
+<a class="btn" onclick="toggle('gezilecek')">Gezilecek Yerler</a>
+<a class="btn" onclick="toggle('acil')">Acil İletişim</a>
+<a class="btn" href="https://uym.ibb.gov.tr/trafik/" target="_blank">Trafik Durumu</a>
 
-  <h2>Günlük Hayat</h2>
+<!-- GUNLUK -->
+<div id="gunluk" class="hidden">
+    <a class="btn" href="https://www.istanbuleczaciodasi.org.tr/nobetci-eczaneler" target="_blank">Nöbetçi Eczane</a>
+    <a class="btn" href="https://www.mgm.gov.tr/" target="_blank">Hava Durumu</a>
+</div>
 
-  <a href="https://www.eczaneler.gen.tr/nobetci-istanbul" target="_blank" class="btn">Nöbetçi Eczaneler</a>
-  <a href="https://www.mgm.gov.tr/" target="_blank" class="btn">Hava Durumu</a>
+<!-- ULASIM -->
+<div id="ulasim" class="hidden">
+    <a class="btn" href="https://iett.istanbul/" target="_blank">İETT</a>
+    <a class="btn" href="https://www.metro.istanbul/" target="_blank">Metro</a>
+</div>
 
-  <h2>Ulaşım Bilgileri</h2>
+<!-- GEZİLECEK -->
+<div id="gezilecek" class="hidden">
 
-  <a href="https://www.iett.istanbul/" target="_blank" class="btn">İETT Hat Bilgileri</a>
-  <a href="https://www.trafik.gov.tr/" target="_blank" class="btn">Trafik Durumu</a>
+    <div class="card">
+        <b>Ayasofya</b><br>
+        Tarihi yapı<br><br>
+        <a class="btn" href="https://www.google.com/maps?q=Ayasofya" target="_blank">Konum Aç</a>
+    </div>
 
-  <h2>Acil İletişim</h2>
+    <div class="card">
+        <b>Taksim Meydanı</b><br>
+        Şehir merkezi<br><br>
+        <a class="btn" href="https://www.google.com/maps?q=Taksim Meydanı" target="_blank">Konum Aç</a>
+    </div>
 
-  <div class="card">
-    <p>112 - Acil</p>
-    <p>110 - İtfaiye</p>
-    <p>155 - Polis</p>
-  </div>
+    <div class="card">
+        <b>Sultanahmet Camii</b><br>
+        Mavi Camii<br><br>
+        <a class="btn" href="https://www.google.com/maps?q=Sultanahmet Camii" target="_blank">Konum Aç</a>
+    </div>
 
-  <h2>Gezilecek Yerler</h2>
-  <div id="liste"></div>
+</div>
 
-  <h2>Harita</h2>
-  <div id="map"></div>
+<!-- ACİL -->
+<div id="acil" class="hidden">
+    <div class="card">
+        🚑 112 - Acil<br>
+        🚒 110 - İtfaiye<br>
+        🚓 155 - Polis<br>
+        ⚡ 186 - Elektrik<br>
+        🔥 177 - Orman Yangını
+    </div>
+</div>
 
-</section>
+<!-- HARITA -->
+<div id="map"></div>
 
-<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-<script src="script.js"></script>
+<!-- ALT MENU -->
+<div class="menu">
+    <div onclick="scrollToTop()">🏠<br>Ana</div>
+    <div onclick="toggle('gezilecek')">📍<br>Yerler</div>
+    <div onclick="toggle('ulasim')">🚇<br>Ulaşım</div>
+</div>
+
+<script>
+function toggle(id) {
+    document.querySelectorAll('.hidden').forEach(el => {
+        if (el.id === id) {
+            el.style.display = el.style.display === 'block' ? 'none' : 'block';
+        } else {
+            el.style.display = 'none';
+        }
+    });
+}
+
+// HARITA
+var map = L.map('map').setView([41.0082, 28.9784], 11);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+}).addTo(map);
+
+L.marker([41.0082, 28.9784]).addTo(map)
+    .bindPopup('İstanbul Merkez')
+    .openPopup();
+
+function scrollToTop() {
+    window.scrollTo(0,0);
+}
+</script>
 
 </body>
 </html>
