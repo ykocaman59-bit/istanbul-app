@@ -56,27 +56,27 @@ iframe {
 <button class="btn">Acil İletişim</button>
 
 <button class="btn" onclick="trafik()">Trafik Haritası</button>
-
 <button class="btn" onclick="canli()">Canlı Trafik (Yoğunluk)</button>
-
 <button class="btn" onclick="mobese()">Canlı Kameralar (MOBESE)</button>
 
-<!-- Harita Alanı -->
-<iframe id="harita"></iframe>
+<!-- HARİTA -->
+<iframe id="harita" src="https://sehirharitasi.ibb.gov.tr/"></iframe>
 
 <script>
 
+// Trafik haritası
 function trafik() {
     document.getElementById("harita").src =
     "https://sehirharitasi.ibb.gov.tr/";
 }
 
+// Yoğunluk haritası
 function canli() {
     document.getElementById("harita").src =
-    "https://uym.ibb.gov.tr/anasayfa";
+    "https://uym.ibb.gov.tr/yharita6/";
 }
 
-// 🔥 BURASI ÖNEMLİ
+// MOBESE (tarayıcıda açılır)
 function mobese() {
     window.open("https://uym.ibb.gov.tr/yharita6/", "_blank");
 }
