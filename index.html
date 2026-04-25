@@ -36,10 +36,6 @@ button {
     box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
 
-button:active {
-    transform: scale(0.97);
-}
-
 .back {
     background: #333;
 }
@@ -49,7 +45,6 @@ button:active {
     padding: 20px;
     border-radius: 20px;
     margin: 10px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
 </style>
 
@@ -110,10 +105,11 @@ function map(q){
 <button class="back" onclick="back()">← Geri</button>
 </div>
 
-<!-- BELEDİYE -->
+<!-- BELEDİYE (DÜZELTİLDİ) -->
 <div id="belediye" class="page container" style="display:none;">
-<button onclick="window.open('https://www.turkiye.gov.tr/')">🔐 E-Devlet</button>
-<button onclick="window.open('https://ivd.gib.gov.tr/')">💰 Vergi & Ceza</button>
+<button onclick="window.open('https://www.turkiye.gov.tr/')">🔐 E-Devlet Giriş</button>
+<button onclick="window.open('https://ivd.gib.gov.tr/')">💰 Vergi & Ceza Sorgulama</button>
+<button onclick="window.open('https://hgsmusteri.ptt.gov.tr/mobil/hgs.jsf')">🚗 HGS / OGS Bakiye</button>
 <button class="back" onclick="back()">← Geri</button>
 </div>
 
@@ -148,26 +144,11 @@ function map(q){
 
 <h2>İstanbul Sende</h2>
 
-<p>İstanbul Sende, İstanbul’da yaşayan kullanıcıların günlük ihtiyaç duyduğu bilgilere hızlı ve pratik şekilde ulaşmasını sağlamak amacıyla geliştirilmiş bir dijital platformdur.</p>
+<p>İstanbul Sende, kullanıcıların günlük ihtiyaç duyduğu bilgilere hızlı erişmesini sağlayan bir platformdur.</p>
 
-<p>Platform, farklı resmi kurum ve hizmet sağlayıcıların sunduğu bilgileri tek bir noktada toplayarak kullanıcıya kolay erişim imkanı sunar.</p>
+<p>Resmi kurumların sunduğu hizmetlere tek noktadan ulaşım kolaylığı sağlar.</p>
 
-<p>Bu uygulama:</p>
-<ul>
-<li>Bilgi üretmez, yönlendirme sağlar</li>
-<li>Resmi kurumların sunduğu hizmetlere erişimi kolaylaştırır</li>
-<li>Kullanıcıya zaman kazandırmayı hedefler</li>
-</ul>
-
-<h3>Neden İstanbul Sende?</h3>
-<ul>
-<li>Hızlı ve sade kullanım</li>
-<li>Mobil uyumlu yapı</li>
-<li>Tek noktadan erişim</li>
-<li>Ücretsiz kullanım</li>
-</ul>
-
-<p><b>Bilgilendirme:</b> Bu uygulama resmi bir kurum değildir. Resmi kurumlara ait hizmetlere yönlendirme yapar ve içerikler ilgili kurumların kaynaklarından sağlanmaktadır.</p>
+<p><b>Bilgilendirme:</b> Bu uygulama resmi bir kurum değildir. Resmi kurumlara ait hizmetlere yönlendirme yapar ve içerikler ilgili kurumların kaynaklarından alınmaktadır.</p>
 
 <p><b>Geliştirici:</b> İstanbul Sende</p>
 
