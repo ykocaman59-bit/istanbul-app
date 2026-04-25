@@ -33,6 +33,15 @@ button {
 .menu {
     display: none;
 }
+
+.box {
+    display: none;
+    padding: 15px;
+    background: white;
+    margin: 10px;
+    border-radius: 10px;
+    text-align: left;
+}
 </style>
 </head>
 
@@ -40,7 +49,7 @@ button {
 
 <h1>İstanbul Sende</h1>
 
-<!-- ANA MENÜ -->
+<!-- GÜNLÜK -->
 <button onclick="toggle('gunluk')">Günlük Hayat</button>
 <div id="gunluk" class="menu">
     <button onclick="go('https://www.eczaneler.gen.tr/')">Nöbetçi Eczaneler</button>
@@ -48,43 +57,77 @@ button {
     <button onclick="go('https://www.mgm.gov.tr/?il=Istanbul')">Hava Durumu</button>
 </div>
 
+<!-- ULAŞIM -->
 <button onclick="toggle('ulasim')">Ulaşım</button>
 <div id="ulasim" class="menu">
     <button onclick="go('https://iett.istanbul')">İETT</button>
     <button onclick="go('https://www.metro.istanbul')">Metro</button>
 </div>
 
+<!-- GEZİ -->
 <button onclick="toggle('gezilecek')">Gezilecek Yerler</button>
 <div id="gezilecek" class="menu">
-    <button onclick="go('https://www.google.com/maps?q=Ayasofya')">Ayasofya</button>
-    <button onclick="go('https://www.google.com/maps?q=Topkapı+Sarayı')">Topkapı Sarayı</button>
-    <button onclick="go('https://www.google.com/maps?q=Galata+Kulesi')">Galata Kulesi</button>
-    <button onclick="go('https://www.google.com/maps?q=Dolmabahçe+Sarayı')">Dolmabahçe Sarayı</button>
+    <button onclick="alert('Ayasofya - Tarihi yapı\nKonum açılıyor') ; go('https://www.google.com/maps?q=Ayasofya')">Ayasofya</button>
+    <button onclick="alert('Galata Kulesi - Tarihi yapı\nKonum açılıyor'); go('https://www.google.com/maps?q=Galata+Kulesi')">Galata Kulesi</button>
+    <button onclick="alert('Topkapı Sarayı - Müze\nKonum açılıyor'); go('https://www.google.com/maps?q=Topkapı+Sarayı')">Topkapı Sarayı</button>
     <button onclick="go('https://tr.wikipedia.org/wiki/%C4%B0stanbul%27daki_m%C3%BCzeler_listesi')">Tüm Müzeler</button>
 </div>
 
+<!-- ACİL -->
 <button onclick="toggle('acil')">Acil İletişim</button>
 <div id="acil" class="menu">
     <button onclick="call('112')">112 Acil</button>
     <button onclick="call('155')">Polis</button>
 </div>
 
+<!-- TRAFİK -->
 <button onclick="toggle('trafik')">Trafik Durumu</button>
 <div id="trafik" class="menu">
     <button onclick="go('https://www.google.com/maps/@41.0082,28.9784,10z/data=!5m1!1e1')">Canlı Trafik</button>
-    <button onclick="go('https://uym.ibb.gov.tr/')">İBB Trafik</button>
-    <button onclick="go('https://uym.ibb.gov.tr/anasayfa/kameralar')">Canlı MOBESE</button>
+    <button onclick="go('https://uym.ibb.gov.tr/')">İBB Trafik Duyuru</button>
+    <button onclick="go('https://uym.ibb.gov.tr/')">Canlı MOBESE</button>
 </div>
 
+<!-- BELEDİYE -->
 <button onclick="toggle('belediye')">Belediye Hizmetleri</button>
 <div id="belediye" class="menu">
     <button onclick="go('https://www.turkiye.gov.tr/')">E-Devlet Giriş</button>
-    <button onclick="go('https://www.turkiye.gov.tr/')">Vergi / HGS / Ceza</button>
+    <button onclick="go('https://www.turkiye.gov.tr/')">Vergi / Ceza</button>
+    <button onclick="go('https://hgsmusteri.ptt.gov.tr/mobil/hgs.jsf')">HGS Bakiye</button>
     <button onclick="go('https://www.turkiye.gov.tr/icisleri-e-basvuru')">Online Başvuru</button>
-    <button onclick="go('https://www.ibb.istanbul')">İBB Hizmetleri</button>
 </div>
 
-<button onclick="go('https://sites.google.com/view/istanbulsendehakkinda/ana-sayfa')">Hakkımda</button>
+<!-- HAKKINDA -->
+<button onclick="toggle('hakkinda')">Hakkımda</button>
+<div id="hakkinda" class="box">
+
+<h3>İstanbul Sende</h3>
+
+<p>İstanbul Sende, İstanbul’da yaşayanların günlük ihtiyaçlarına hızlı ve güvenilir çözümler sunan bir platformdur.</p>
+
+<p>Amacımız, dağınık bilgileri tek bir yerde toplayarak kullanıcıların zamandan tasarruf etmesini sağlamaktır.</p>
+
+<p>Bu platform ile:</p>
+
+<ul>
+<li>Nöbetçi eczaneleri bulabilirsiniz</li>
+<li>Hava durumunu öğrenebilirsiniz</li>
+<li>Trafik ve ulaşım bilgilerine ulaşabilirsiniz</li>
+<li>Acil numaralara tek tıkla erişebilirsiniz</li>
+<li>E-Devlet ve resmi işlemleri kolayca yapabilirsiniz</li>
+</ul>
+
+<p><b>Neden İstanbul Sende?</b></p>
+<ul>
+<li>Hızlı ve sade kullanım</li>
+<li>Mobil uyumlu</li>
+<li>Güvenilir bağlantılar</li>
+<li>Ücretsiz ve reklamsız</li>
+</ul>
+
+<p><b>Geliştirici:</b> İstanbul Sende</p>
+
+</div>
 
 <script>
 function toggle(id) {
