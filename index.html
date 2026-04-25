@@ -134,13 +134,12 @@ iframe{
 🔥 177 - Orman Yangını
 </div>
 
-<button class="btn" onclick="toggle('trafik')">Trafik Durumu</button>
+<button class="btn" onclick="toggle('trafik')">Trafik Haritası</button>
 <div id="trafik" class="card">
 <iframe src="https://www.google.com/maps?q=istanbul&output=embed"></iframe>
 </div>
 
-<!-- YENİ EKLEDİĞİN ŞEY -->
-<button class="btn" onclick="openMobese()">Canlı Trafik Kameraları</button>
+<button class="btn" onclick="openTraffic()">Canlı Trafik (Yoğunluk)</button>
 
 </div>
 
@@ -154,8 +153,8 @@ function openMap(lat, lng){
     window.open(`https://www.google.com/maps?q=${lat},${lng}`);
 }
 
-function openMobese(){
-    window.open("https://uym.ibb.gov.tr/anasayfa");
+function openTraffic(){
+    window.open("https://www.google.com/maps/@41.0082,28.9784,12z/data=!5m1!1e1");
 }
 </script>
 
