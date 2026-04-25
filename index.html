@@ -8,24 +8,24 @@
 <style>
 body {
     font-family: Arial;
-    text-align: center;
     background: #f2f2f2;
+    text-align: center;
 }
 
-h1 {
+.header {
     background: linear-gradient(to right, #00c6ff, #0072ff);
     color: white;
-    padding: 15px;
-    border-radius: 15px;
+    padding: 20px;
+    font-size: 24px;
+    border-radius: 0 0 20px 20px;
 }
 
 button {
-    display: block;
-    width: 90%;
-    margin: 10px auto;
+    width: 85%;
     padding: 15px;
-    border-radius: 25px;
+    margin: 10px;
     border: none;
+    border-radius: 25px;
     background: #8B4513;
     color: white;
     font-size: 16px;
@@ -34,164 +34,108 @@ button {
 .back {
     background: #333;
 }
-
-.card {
-    background: white;
-    padding: 15px;
-    margin: 15px;
-    border-radius: 10px;
-    text-align: left;
-}
 </style>
+
+<script>
+function git(link){
+    window.location.href = link;
+}
+
+function harita(q){
+    window.location.href = "https://www.google.com/maps/search/?api=1&query=" + q;
+}
+
+function sayfa(secim){
+
+let alan = document.getElementById("icerik");
+
+if(secim=="gunluk"){
+alan.innerHTML = `
+<button onclick="git('https://www.google.com/maps/search/nöbetçi+eczane+istanbul')">Nöbetçi Eczaneler Harita</button>
+<button onclick="git('https://www.turkiye.gov.tr/saglik-bakanligi-nobetci-eczane-sorgulama')">Nöbetçi Eczaneler</button>
+<button onclick="git('https://www.mgm.gov.tr/tahmin/il-ve-ilceler.aspx?il=Istanbul')">Hava Durumu</button>
+
+<button class="back" onclick="anasayfa()">← Geri</button>
+`;
+}
+
+if(secim=="ulasim"){
+alan.innerHTML = `
+<button onclick="git('https://iett.istanbul/')">İETT Otobüs Saatleri</button>
+<button onclick="git('https://www.metro.istanbul/Home/Index')">Metro Saatleri</button>
+
+<button class="back" onclick="anasayfa()">← Geri</button>
+`;
+}
+
+if(secim=="trafik"){
+alan.innerHTML = `
+<button onclick="git('https://uym.ibb.gov.tr/yharita6/')">Canlı Trafik Yoğunluk</button>
+<button onclick="git('https://uym.ibb.gov.tr/')">Trafik Haritası</button>
+<button onclick="git('https://www.ibb.istanbul/tr-TR/duyurular')">İBB Trafik Duyuruları</button>
+
+<button class="back" onclick="anasayfa()">← Geri</button>
+`;
+}
+
+if(secim=="belediye"){
+alan.innerHTML = `
+<button onclick="git('https://www.turkiye.gov.tr/')">E-Devlet Giriş</button>
+<button onclick="git('https://ivd.gib.gov.tr/')">Vergi & Ceza</button>
+
+<button class="back" onclick="anasayfa()">← Geri</button>
+`;
+}
+
+if(secim=="gezilecek"){
+alan.innerHTML = `
+<button onclick="harita('Ayasofya')">Ayasofya</button>
+<button onclick="harita('Topkapı Sarayı')">Topkapı Sarayı</button>
+<button onclick="harita('Dolmabahçe Sarayı')">Dolmabahçe Sarayı</button>
+<button onclick="harita('Galata Kulesi')">Galata Kulesi</button>
+<button onclick="harita('Yerebatan Sarnıcı')">Yerebatan Sarnıcı</button>
+<button onclick="harita('İstanbul Arkeoloji Müzesi')">Arkeoloji Müzesi</button>
+<button onclick="harita('Rahmi Koç Müzesi')">Rahmi Koç Müzesi</button>
+<button onclick="harita('Miniatürk')">Miniatürk</button>
+<button onclick="harita('Panorama 1453')">Panorama 1453</button>
+<button onclick="harita('Pera Müzesi')">Pera Müzesi</button>
+<button onclick="harita('Sakıp Sabancı Müzesi')">Sabancı Müzesi</button>
+<button onclick="harita('İstanbul Modern')">İstanbul Modern</button>
+<button onclick="harita('Kız Kulesi')">Kız Kulesi</button>
+<button onclick="harita('Pierre Loti Tepesi')">Pierre Loti</button>
+<button onclick="harita('Emirgan Korusu')">Emirgan Korusu</button>
+<button onclick="harita('Gülhane Parkı')">Gülhane Parkı</button>
+
+<button class="back" onclick="anasayfa()">← Geri</button>
+`;
+}
+
+}
+
+function anasayfa(){
+document.getElementById("icerik").innerHTML = `
+<button onclick="sayfa('gunluk')">Günlük Hayat</button>
+<button onclick="sayfa('ulasim')">Ulaşım</button>
+<button onclick="sayfa('trafik')">Trafik Durumu</button>
+<button onclick="sayfa('belediye')">Belediye Hizmetleri</button>
+<button onclick="sayfa('gezilecek')">Gezilecek Yerler</button>
+`;
+}
+</script>
+
 </head>
 
 <body>
 
-<h1>İstanbul Sende</h1>
+<div class="header">İstanbul Sende</div>
 
-<div id="main">
-
-<button onclick="openMenu('gunluk')">Günlük Hayat</button>
-<button onclick="openMenu('ulasim')">Ulaşım</button>
-<button onclick="openMenu('gezilecek')">Gezilecek Yerler</button>
-<button onclick="openMenu('trafik')">Trafik Durumu</button>
-<button onclick="openMenu('belediye')">Belediye Hizmetleri</button>
-<button onclick="openMenu('hakkimda')">Hakkımda</button>
-
+<div id="icerik">
+<button onclick="sayfa('gunluk')">Günlük Hayat</button>
+<button onclick="sayfa('ulasim')">Ulaşım</button>
+<button onclick="sayfa('trafik')">Trafik Durumu</button>
+<button onclick="sayfa('belediye')">Belediye Hizmetleri</button>
+<button onclick="sayfa('gezilecek')">Gezilecek Yerler</button>
 </div>
-
-<script>
-
-function openMenu(menu){
-
-let html = "";
-
-/* GÜNLÜK */
-if(menu==="gunluk"){
-html = `
-<button onclick="window.open('https://www.eczaneler.gen.tr/')">Nöbetçi Eczaneler</button>
-
-<button onclick="window.open('https://www.google.com/maps/search/nöbetçi+eczane')">
-Nöbetçi Eczane (Harita)
-</button>
-
-<button onclick="window.open('https://www.mgm.gov.tr/?il=Istanbul')">
-Hava Durumu
-</button>
-
-<button class="back" onclick="goBack()">← Geri</button>
-`;
-}
-
-/* ULAŞIM */
-if(menu==="ulasim"){
-html = `
-<button onclick="window.open('https://iett.istanbul/')">
-İETT Otobüs Saatleri
-</button>
-
-<button onclick="window.open('https://www.metro.istanbul/Home/Index')">
-Metro Saatleri
-</button>
-
-<button class="back" onclick="goBack()">← Geri</button>
-`;
-}
-
-/* GEZİLECEK */
-if(menu==="gezilecek"){
-html = `
-<button onclick="window.open('https://www.google.com/search?q=Ayasofya')">Ayasofya</button>
-<button onclick="window.open('https://www.google.com/search?q=Topkapı Sarayı')">Topkapı Sarayı</button>
-<button onclick="window.open('https://www.google.com/search?q=Dolmabahçe Sarayı')">Dolmabahçe Sarayı</button>
-<button onclick="window.open('https://www.google.com/search?q=Galata Kulesi')">Galata Kulesi</button>
-<button onclick="window.open('https://www.google.com/search?q=Yerebatan Sarnıcı')">Yerebatan Sarnıcı</button>
-<button onclick="window.open('https://www.google.com/search?q=İstanbul Arkeoloji Müzesi')">Arkeoloji Müzesi</button>
-<button onclick="window.open('https://www.google.com/search?q=Rahmi Koç Müzesi')">Rahmi Koç Müzesi</button>
-<button onclick="window.open('https://www.google.com/search?q=Miniatürk')">Miniatürk</button>
-
-<button class="back" onclick="goBack()">← Geri</button>
-`;
-}
-
-/* TRAFİK */
-if(menu==="trafik"){
-html = `
-<button onclick="window.open('https://uym.ibb.gov.tr/yharita6/')">
-Canlı Trafik Yoğunluk
-</button>
-
-<button onclick="window.open('https://www.google.com/maps')">
-Trafik Haritası
-</button>
-
-<button class="back" onclick="goBack()">← Geri</button>
-`;
-}
-
-/* BELEDİYE */
-if(menu==="belediye"){
-html = `
-<button onclick="window.open('https://www.turkiye.gov.tr/')">
-E-Devlet Giriş
-</button>
-
-<button onclick="window.open('https://www.turkiye.gov.tr/gib-vergi-borcu-sorgulama')">
-Vergi & Ceza
-</button>
-
-<button onclick="window.open('https://hgsmusteri.ptt.gov.tr/mobil/hgs.jsf')">
-HGS Bakiye
-</button>
-
-<button class="back" onclick="goBack()">← Geri</button>
-`;
-}
-
-/* HAKKIMDA */
-if(menu==="hakkimda"){
-html = `
-<div class="card">
-<h2>İstanbul Sende</h2>
-
-<p>
-İstanbul Sende, İstanbul’da yaşayanların günlük ihtiyaçlarına hızlı,
-pratik ve güvenilir çözümler sunmak amacıyla geliştirilmiş bir dijital platformdur.
-</p>
-
-<p>
-Bu uygulama; nöbetçi eczaneler, hava durumu, ulaşım, trafik ve resmi hizmetlere
-kolay erişim sağlamak için farklı resmi kaynaklara yönlendirme yapar.
-</p>
-
-<p>
-Sunulan bilgiler ilgili resmi kurumların web sitelerinden alınmakta olup,
-uygulama bu hizmetlerin sağlayıcısı değildir, sadece erişimi kolaylaştırır.
-</p>
-
-<p><b>Avantajlar:</b></p>
-<ul>
-<li>Hızlı erişim</li>
-<li>Mobil uyumlu yapı</li>
-<li>Güvenilir kaynaklara yönlendirme</li>
-<li>Ücretsiz kullanım</li>
-</ul>
-
-<p><b>Geliştirici:</b> İstanbul Sende</p>
-</div>
-
-<button class="back" onclick="goBack()">← Geri</button>
-`;
-}
-
-document.getElementById("main").innerHTML = html;
-}
-
-function goBack(){
-location.reload();
-}
-
-</script>
 
 </body>
 </html>
