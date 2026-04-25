@@ -95,38 +95,31 @@ iframe{
 <button class="btn" onclick="toggle('gezilecek')">Gezilecek Yerler</button>
 <div id="gezilecek" class="card">
 
-<div class="place">
-Ayasofya
+<div class="place">Ayasofya
 <button onclick="openMap(41.0086,28.9802)">Konum Aç</button>
 </div>
 
-<div class="place">
-Taksim Meydanı
+<div class="place">Taksim Meydanı
 <button onclick="openMap(41.0369,28.9850)">Konum Aç</button>
 </div>
 
-<div class="place">
-Sultanahmet Camii
+<div class="place">Sultanahmet Camii
 <button onclick="openMap(41.0055,28.9768)">Konum Aç</button>
 </div>
 
-<div class="place">
-Galata Kulesi
+<div class="place">Galata Kulesi
 <button onclick="openMap(41.0256,28.9744)">Konum Aç</button>
 </div>
 
-<div class="place">
-Dolmabahçe Sarayı
+<div class="place">Dolmabahçe Sarayı
 <button onclick="openMap(41.0392,29.0006)">Konum Aç</button>
 </div>
 
-<div class="place">
-Kız Kulesi
+<div class="place">Kız Kulesi
 <button onclick="openMap(41.0211,29.0041)">Konum Aç</button>
 </div>
 
-<div class="place">
-Kapalıçarşı
+<div class="place">Kapalıçarşı
 <button onclick="openMap(41.0106,28.9680)">Konum Aç</button>
 </div>
 
@@ -146,6 +139,9 @@ Kapalıçarşı
 <iframe src="https://www.google.com/maps?q=istanbul&output=embed"></iframe>
 </div>
 
+<!-- YENİ EKLEDİĞİN ŞEY -->
+<button class="btn" onclick="openMobese()">Canlı Trafik Kameraları</button>
+
 </div>
 
 <script>
@@ -156,6 +152,10 @@ function toggle(id){
 
 function openMap(lat, lng){
     window.open(`https://www.google.com/maps?q=${lat},${lng}`);
+}
+
+function openMobese(){
+    window.open("https://uym.ibb.gov.tr/anasayfa");
 }
 </script>
 
