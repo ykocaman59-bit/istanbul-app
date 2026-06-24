@@ -2,15 +2,23 @@
 <html lang="tr">
 <head>
     <meta name="google-site-verification" content="xhlpQMoSCJbknHq2NHc6SERpsa7XpxBxDb9sVj1iIHI" />
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>İstanbul Sende</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Google Arama Motoru İçin SEO Etiketleri -->
+    <title>İstanbul Sende - Resmi ve Adli Kurum Bağlantı Rehberi</title>
+    <meta name="description" content="İstanbul Sende; adli, belediye ve günlük yaşam resmi site linklerini bir araya getiren bağımsız bir rehber uygulamasıdır.">
+    <meta name="keywords" content="istanbul sende, istanbul app, ykocaman59, istanbul kolay erişim, resmi kurum linkleri">
+    <meta name="robots" content="index, follow">
 
 <style>
 body {
     font-family: Arial, sans-serif;
     background: linear-gradient(to bottom, #e0eafc, #cfdef3);
     margin: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 h1 {
@@ -19,22 +27,27 @@ h1 {
     padding: 20px;
     border-radius: 0 0 25px 25px;
     margin: 0;
+    text-align: center;
 }
 
 .container {
     padding: 15px;
+    flex: 1;
+    text-align: center;
 }
 
 button {
     width: 90%;
     padding: 15px;
-    margin: 10px;
+    margin: 10px auto;
     border: none;
     border-radius: 30px;
     font-size: 16px;
     background: linear-gradient(to right, #ff7e5f, #feb47b);
     color: white;
     box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    display: block;
+    cursor: pointer;
 }
 
 .back {
@@ -46,6 +59,19 @@ button {
     padding: 20px;
     border-radius: 20px;
     margin: 10px;
+    text-align: left;
+}
+
+/* Yasal Uyarı Footer Alanı */
+.footer-disclaimer {
+    background-color: rgba(255, 255, 255, 0.7);
+    color: #555;
+    font-size: 12px;
+    text-align: center;
+    padding: 15px;
+    margin-top: auto;
+    border-top: 1px solid rgba(0,0,0,0.05);
+    line-height: 1.4;
 }
 </style>
 
@@ -106,7 +132,7 @@ function map(q){
 <button class="back" onclick="back()">← Geri</button>
 </div>
 
-<!-- BELEDİYE (DÜZELTİLDİ) -->
+<!-- BELEDİYE -->
 <div id="belediye" class="page container" style="display:none;">
 <button onclick="window.open('https://www.turkiye.gov.tr/')">🔐 E-Devlet Giriş</button>
 <button onclick="window.open('https://www.turkiye.gov.tr/')">💰 Vergi & Ceza Sorgulama</button>
@@ -139,14 +165,13 @@ function map(q){
 <button class="back" onclick="back()">← Geri</button>
 </div>
 
-<!-- HAKKIMDA (AVANTAJ EKLENDİ) -->
+<!-- HAKKIMDA -->
 <div id="hakkimda" class="page container" style="display:none;">
 <div class="card">
 
 <h2>İstanbul Sende</h2>
 
 <p>İstanbul Sende, kullanıcıların günlük ihtiyaç duyduğu bilgilere hızlı erişmesini sağlayan bir platformdur.</p>
-
 <p>Resmi kurumların sunduğu hizmetlere tek noktadan ulaşım kolaylığı sağlar.</p>
 
 <p><b>Avantajları:</b></p>
@@ -159,12 +184,16 @@ function map(q){
 </ul>
 
 <p><b>Bilgilendirme:</b> Bu uygulama resmi bir kurum değildir. Resmi kurumlara ait hizmetlere yönlendirme yapar ve içerikler ilgili kurumların kaynaklarından alınmaktadır.</p>
-
-<p><b>Geliştirici:</b> İstanbul Sende</p>
+<p><b>Geliştirici:</b> ykocaman59</p>
 
 </div>
 
 <button class="back" onclick="back()">← Geri</button>
+</div>
+
+<!-- Sabit Yasal Bilgilendirme Alti (Footer) -->
+<div class="footer-disclaimer">
+    <strong>Önemli Bilgilendirme:</strong> Bu web sitesi hiçbir kamu kurum veya kuruluşu ile resmi bağı bulunmayan, bağımsız bir açık kaynak yönlendirme rehberidir. Sitedeki bağlantılar kullanıcıları doğrudan ilgili kurumların resmi adreslerine ulaştırır.
 </div>
 
 </body>
