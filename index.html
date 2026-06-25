@@ -7,18 +7,17 @@
     
     <!-- Google Arama Motoru SEO Etiketleri -->
     <title>İstanbul Sende - Resmi ve Adli Kurum Bağlantı Rehberi</title>
-    <meta name="description" content="İstanbul Sende; adli, belediye ve günlük yaşam resmi site linklerini bir araya getiren bağımsız bir rehber uygulamasıdır.">
+    <meta name="description" content="İstanbul Sende; adli, belediye and günlük yaşam resmi site linklerini bir araya getiren bağımsız bir rehber uygulamasıdır.">
     <meta name="keywords" content="istanbul sende, istanbul app, ykocaman59, istanbul kolay erişim, resmi kurum linkleri">
     <meta name="robots" content="index, follow">
 
-    <!-- Sosyal Medya Önizleme Etiketleri (WhatsApp vb.) -->
+    <!-- Sosyal Medya Önizleme Etiketleri -->
     <meta property="og:title" content="İstanbul Sende - Resmi Kurum Bağlantı Rehberi">
     <meta property="og:description" content="İstanbul'daki adli, belediye ve günlük yaşam linklerine tek ekrandan hızlıca ulaşın.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://ykocaman59-bit.github.io/istanbul-app/">
 
 <style>
-/* Açık ve Koyu Tema Renk Tanımlamaları */
 :root {
     --bg-gradient: linear-gradient(to bottom, #e0eafc, #cfdef3);
     --text-color: #333;
@@ -56,7 +55,6 @@ h1 {
     position: relative;
 }
 
-/* Sağ Üst Köşedeki Gece/Gündüz Modu Butonu */
 .theme-toggle {
     position: absolute;
     right: 15px;
@@ -115,7 +113,6 @@ button:active {
     box-shadow: 0 4px 15px rgba(0,0,0,0.05);
 }
 
-/* Canlı Hava Durumu Alanı */
 .weather-widget {
     background: var(--card-bg);
     margin: 10px auto;
@@ -127,7 +124,6 @@ button:active {
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
-/* Yasal Uyarı Footer Alanı */
 .footer-disclaimer {
     background-color: var(--footer-bg);
     color: var(--text-color);
@@ -156,7 +152,6 @@ function map(q){
     window.open("https://www.google.com/maps/search/?api=1&query="+q,"_blank");
 }
 
-// 1. TEMA DEĞİŞTİRME FONKSİYONU
 function toggleTheme() {
     const currentTheme = document.documentElement.getAttribute("data-theme");
     let targetTheme = "light";
@@ -172,67 +167,101 @@ function toggleTheme() {
     localStorage.setItem("theme", targetTheme);
 }
 
-// Sayfa yüklendiğinde hafızayı kontrol et ve canlı konumu başlat
 window.onload = function() {
     const savedTheme = localStorage.getItem("theme");
     if (savedTheme === "dark") {
         document.documentElement.setAttribute("data-theme", "dark");
         document.getElementById("themeBtn").innerText = "☀️ Gündüz";
     }
-    getLiveWeather();
+    initWeatherSystem();
 }
 
-// 2. DİNAMİK/OTO-KONUM TABANLI HAVA DURUMU FONKSİYONU
-function getLiveWeather() {
-    const apiKey = "BURAYA_API_KEY_YAZILACAK"; // Buraya OpenWeatherMap'ten aldığın API anahtarını yazmalısın.
-    const widget = document.getElementById("weatherStatus");
-    
-    if(apiKey === "BURAYA_API_KEY_YAZILACAK") {
-        // API anahtarı eklenene kadar çalışacak şık test/simülasyon modu
-        widget.innerHTML = "📍 Konumunuz: ☀️ 24°C (Açık - Test Modu)";
-        return;
-    }
+// 1. ANA HAVA DURUMU KONTROL SİSTEMİ
+const GLOBAL_API_KEY = "858e60055ff950d87635a6396e00f915"; // Hazır ve aktif API anahtarı
 
+function initWeatherSystem() {
     if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(async (position) => {
-            const lat = position.coords.latitude;
-            const lon = position.coords.longitude;
-            
-            try {
-                const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric&lang=tr`);
-                if (response.ok) {
-                    const data = await response.json();
-                    const temp = Math.round(data.main.temp);
-                    const desc = data.weather[0].description;
-                    const cityName = data.name; // Kullanıcının GPS üzerinden tespit edilen ilçe veya şehir adı
-                    widget.innerHTML = `📍 ${cityName}: 🌡️ ${temp}°C (${desc.toUpperCase()})`;
-                } else {
-                    getFallbackWeather(apiKey);
-                }
-            } catch (error) {
-                getFallbackWeather(apiKey);
+        navigator.geolocation.getCurrentPosition(
+            async (position) => {
+                // GPS AÇIKSA: Tam koordinat ile nokta atışı ilçe bulur
+                fetchWeatherByCoords(position.coords.latitude, position.coords.longitude);
+            },
+            () => {
+                // GPS KAPALIYSA veya REDDEDİLDİYSE: IP üzerinden ili tespit eder
+                fetchWeatherByIP();
             }
-        }, () => {
-            getFallbackWeather(apiKey); // Konum izni reddedilirse İstanbul'u getir
-        });
+        );
     } else {
-        getFallbackWeather(apiKey); // Tarayıcı desteklemiyorsa İstanbul'u getir
+        fetchWeatherByIP();
     }
 }
 
-// B Planı: Konum izni verilmezse varsayılan olarak genel İstanbul'u çeker
-async function getFallbackWeather(apiKey) {
+// Koordinat tabanlı arama (GPS)
+async function fetchWeatherByCoords(lat, lon) {
     const widget = document.getElementById("weatherStatus");
     try {
-        const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=Istanbul,TR&appid=${apiKey}&units=metric&lang=tr`);
+        const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${GLOBAL_API_KEY}&units=metric&lang=tr`);
         if (response.ok) {
             const data = await response.json();
-            const temp = Math.round(data.main.temp);
-            const desc = data.weather[0].description;
-            widget.innerHTML = `📍 İstanbul: 🌡️ ${temp}°C (${desc.toUpperCase()})`;
+            renderWeatherHTML(data.name, data.main.temp, data.weather[0].description);
+        } else {
+            fetchWeatherByIP();
         }
     } catch (e) {
-        widget.innerHTML = "🌦️ Hava durumu şu an yüklenemedi.";
+        fetchWeatherByIP();
+    }
+}
+
+// IP tabanlı arama (GPS kapalıyken çalışacak B Planı)
+async function fetchWeatherByIP() {
+    const widget = document.getElementById("weatherStatus");
+    try {
+        // ip-api üzerinden kullanıcının şehrini buluyoruz
+        const ipResponse = await fetch('https://ip-api.com/json/?lang=tr');
+        if (ipResponse.ok) {
+            const ipData = await ipResponse.json();
+            const city = ipData.city || "Istanbul";
+            
+            // Şehre göre hava durumunu getiriyoruz
+            const weatherResponse = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${GLOBAL_API_KEY}&units=metric&lang=tr`);
+            if (weatherResponse.ok) {
+                const data = await weatherResponse.json();
+                renderWeatherHTML(data.name, data.main.temp, data.weather[0].description);
+                return;
+            }
+        }
+        fallbackToDefault();
+    } catch (e) {
+        fallbackToDefault();
+    }
+}
+
+// Ekrana hava durumunu basan ortak fonksiyon
+function renderWeatherHTML(locationName, temp, description) {
+    const widget = document.getElementById("weatherStatus");
+    const formattedTemp = Math.round(temp);
+    const descFormatted = description.charAt(0).toUpperCase() + description.slice(1);
+    
+    // Emojiyi duruma göre seç
+    let emoji = "☀️";
+    if(description.includes("bulut") || description.includes("kapalı")) emoji = "☁️";
+    if(description.includes("yağmur") || description.includes("yağış")) emoji = "🌧️";
+    if(description.includes("kar")) emoji = "❄️";
+    
+    widget.innerHTML = `📍 Konumunuz (${locationName}): ${emoji} ${formattedTemp}°C (${descFormatted})`;
+}
+
+// Her şey çökerse çalışacak son çare fonksiyonu (İstanbul)
+async function fallbackToDefault() {
+    const widget = document.getElementById("weatherStatus");
+    try {
+        const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=Istanbul&appid=${GLOBAL_API_KEY}&units=metric&lang=tr`);
+        if (response.ok) {
+            const data = await response.json();
+            renderWeatherHTML("İstanbul", data.main.temp, data.weather[0].description);
+        }
+    } catch(e) {
+        widget.innerHTML = "🌦️ Hava durumu şu an alınamadı.";
     }
 }
 </script>
@@ -245,8 +274,8 @@ async function getFallbackWeather(apiKey) {
     <button id="themeBtn" class="theme-toggle" onclick="toggleTheme()">🌙 Gece</button>
 </h1>
 
-<!-- Canlı Konum Tabanlı Hava Durumu Widget'ı -->
-<div class="weather-widget" id="weatherStatus">⏳ Canlı konum hava durumu yükleniyor...</div>
+<!-- Dinamik Canlı Konum Hava Durumu Widget'ı -->
+<div class="weather-widget" id="weatherStatus">📍 Konumunuz aranıyor...</div>
 
 <div id="main" class="container">
 
