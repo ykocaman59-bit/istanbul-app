@@ -5,18 +5,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
+    <!-- Google Arama Motoru SEO Etiketleri -->
     <title>İstanbul Sende - Resmi ve Adli Kurum Bağlantı Rehberi</title>
     <meta name="description" content="İstanbul Sende; adli, belediye ve günlük yaşam resmi site linklerini bir araya getiren bağımsız bir rehber uygulamasıdır.">
     <meta name="keywords" content="istanbul sende, istanbul app, ykocaman59, istanbul kolay erişim, resmi kurum linkleri">
     <meta name="robots" content="index, follow">
 
+    <!-- Sosyal Medya Önizleme Etiketleri (WhatsApp vb.) -->
     <meta property="og:title" content="İstanbul Sende - Resmi Kurum Bağlantı Rehberi">
     <meta property="og:description" content="İstanbul'daki adli, belediye ve günlük yaşam linklerine tek ekrandan hızlıca ulaşın.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://ykocaman59-bit.github.io/istanbul-app/">
 
 <style>
-/* Açık ve Koyu Tema Ayarları */
+/* Açık ve Koyu Tema Renk Tanımlamaları */
 :root {
     --bg-gradient: linear-gradient(to bottom, #e0eafc, #cfdef3);
     --text-color: #333;
@@ -54,6 +56,7 @@ h1 {
     position: relative;
 }
 
+/* Sağ Üst Köşedeki Gece/Gündüz Modu Butonu */
 .theme-toggle {
     position: absolute;
     right: 15px;
@@ -112,6 +115,7 @@ button:active {
     box-shadow: 0 4px 15px rgba(0,0,0,0.05);
 }
 
+/* Canlı Hava Durumu Alanı */
 .weather-widget {
     background: var(--card-bg);
     margin: 10px auto;
@@ -123,6 +127,7 @@ button:active {
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
+/* Yasal Uyarı Footer Alanı */
 .footer-disclaimer {
     background-color: var(--footer-bg);
     color: var(--text-color);
@@ -151,6 +156,7 @@ function map(q){
     window.open("https://www.google.com/maps/search/?api=1&query="+q,"_blank");
 }
 
+// 1. TEMA DEĞİŞTİRME FONKSİYONU
 function toggleTheme() {
     const currentTheme = document.documentElement.getAttribute("data-theme");
     let targetTheme = "light";
@@ -166,85 +172,94 @@ function toggleTheme() {
     localStorage.setItem("theme", targetTheme);
 }
 
+// Sayfa yüklendiğinde hafızayı kontrol et ve canlı konumu başlat
 window.onload = function() {
     const savedTheme = localStorage.getItem("theme");
     if (savedTheme === "dark") {
         document.documentElement.setAttribute("data-theme", "dark");
         document.getElementById("themeBtn").innerText = "☀️ Gündüz";
     }
-    initWeatherSystem();
+    getLiveWeather();
 }
 
-// GARANTİLİ, KİLİTLENMEYEN HAVA DURUMU SİSTEMİ
-const GLOBAL_API_KEY = "858e60055ff950d87635a6396e00f915";
+// 2. DİNAMİK/OTO-KONUM TABANLI HAVA DURUMU FONKSİYONU
+const apiKey = "858e60055ff950d87635a6396e00f915"; // Aktif ve çalışan ücretsiz API Anahtarı
 
-function initWeatherSystem() {
-    let isFinished = false;
+function getLiveWeather() {
+    const widget = document.getElementById("weatherStatus");
+    let operationCompleted = false;
 
-    // Güvence Adımı: 1.5 saniye içinde hiçbir veri gelmezse sistemi zorla İstanbul'a geçir
-    const watchdog = setTimeout(() => {
-        if (!isFinished) {
-            isFinished = true;
-            fallbackToDefault();
+    // Zaman Aşımı Güvencesi: Konum akışı 2 saniye içinde yanıt vermezse kilidi kırıp B planına geçer
+    const safetyTimeout = setTimeout(() => {
+        if (!operationCompleted) {
+            operationCompleted = true;
+            getFallbackWeather();
         }
-    }, 1500);
+    }, 2000);
 
-    // GPS Sorgusu
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
             async (position) => {
-                if (isFinished) return;
+                if (operationCompleted) return;
                 const lat = position.coords.latitude;
                 const lon = position.coords.longitude;
+                
                 try {
-                    const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${GLOBAL_API_KEY}&units=metric&lang=tr`);
-                    if (response.ok && !isFinished) {
-                        clearTimeout(watchdog);
-                        isFinished = true;
+                    const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric&lang=tr`);
+                    if (response.ok && !operationCompleted) {
+                        clearTimeout(safetyTimeout);
+                        operationCompleted = true;
                         const data = await response.json();
-                        renderWeatherHTML(data.name, data.main.temp, data.weather[0].description);
+                        const temp = Math.round(data.main.temp);
+                        const desc = data.weather[0].description;
+                        const cityName = data.name;
+                        widget.innerHTML = `📍 Konumunuz (${cityName}): 🌡️ ${temp}°C (${desc.toUpperCase()})`;
+                    } else if (!operationCompleted) {
+                        clearTimeout(safetyTimeout);
+                        operationCompleted = true;
+                        getFallbackWeather();
                     }
-                } catch (e) {
-                    if(!isFinished) { isFinished = true; clearTimeout(watchdog); fallbackToDefault(); }
+                } catch (error) {
+                    if (!operationCompleted) {
+                        clearTimeout(safetyTimeout);
+                        operationCompleted = true;
+                        getFallbackWeather();
+                    }
+                }
+            }, 
+            () => {
+                if (!operationCompleted) {
+                    clearTimeout(safetyTimeout);
+                    operationCompleted = true;
+                    getFallbackWeather(); // Konum izni reddedilirse İstanbul'u dene
                 }
             },
-            () => {
-                if (!isFinished) { isFinished = true; clearTimeout(watchdog); fallbackToDefault(); }
-            },
-            { timeout: 1200 }
+            { timeout: 1800 } // Tarayıcının konum servisinin cevap verme üst sınırı
         );
     } else {
-        if (!isFinished) { isFinished = true; clearTimeout(watchdog); fallbackToDefault(); }
+        if (!operationCompleted) {
+            clearTimeout(safetyTimeout);
+            operationCompleted = true;
+            getFallbackWeather(); // Tarayıcı desteklemiyorsa İstanbul'u dene
+        }
     }
 }
 
-// Ekrana basma fonksiyonu
-function renderWeatherHTML(locationName, temp, description) {
-    const widget = document.getElementById("weatherStatus");
-    const formattedTemp = Math.round(temp);
-    const descFormatted = description.charAt(0).toUpperCase() + description.slice(1);
-    
-    let emoji = "☀️";
-    if(description.includes("bulut") || description.includes("kapalı")) emoji = "☁️";
-    if(description.includes("yağmur") || description.includes("yağış") || description.includes("çiseleme")) emoji = "🌧️";
-    if(description.includes("kar")) emoji = "❄️";
-    
-    widget.innerHTML = `📍 Konumunuz (${locationName}): ${emoji} ${formattedTemp}°C (${descFormatted})`;
-}
-
-// Yedek Plan (Takılmayı Önleyen Kesin Çözüm)
-async function fallbackToDefault() {
+// B Planı: Konum izni verilmezse veya cihaz tespiti gecikirse varsayılan olarak İstanbul'u çeker
+async function getFallbackWeather() {
     const widget = document.getElementById("weatherStatus");
     try {
-        const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=Istanbul&appid=${GLOBAL_API_KEY}&units=metric&lang=tr`);
+        const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=Istanbul,TR&appid=${apiKey}&units=metric&lang=tr`);
         if (response.ok) {
             const data = await response.json();
-            renderWeatherHTML("İstanbul", data.main.temp, data.weather[0].description);
+            const temp = Math.round(data.main.temp);
+            const desc = data.weather[0].description;
+            widget.innerHTML = `📍 İstanbul: 🌡️ ${temp}°C (${desc.toUpperCase()})`;
         } else {
-            widget.innerHTML = "🌦️ Hava durumu şu an alınamadı.";
+            widget.innerHTML = "救援 Hava durumu şu an yüklenemedi.";
         }
-    } catch(e) {
-        widget.innerHTML = "🌦️ Hava durumu şu an alınamadı.";
+    } catch (e) {
+        widget.innerHTML = "🌦️ Hava durumu şu an yüklenemedi.";
     }
 }
 </script>
@@ -257,7 +272,8 @@ async function fallbackToDefault() {
     <button id="themeBtn" class="theme-toggle" onclick="toggleTheme()">🌙 Gece</button>
 </h1>
 
-<div class="weather-widget" id="weatherStatus">📍 Konumunuz aranıyor...</div>
+<!-- Canlı Konum Tabanlı Hava Durumu Widget'ı -->
+<div class="weather-widget" id="weatherStatus">⏳ Canlı konum hava durumu yükleniyor...</div>
 
 <div id="main" class="container">
 
@@ -271,6 +287,7 @@ async function fallbackToDefault() {
 
 </div>
 
+<!-- GÜNLÜK YAŞAM -->
 <div id="gunluk" class="page container" style="display:none;">
 <button onclick="window.open('https://www.eczaneler.gen.tr/nobetci-istanbul-sultanbeyli')">💊 Nöbetçi Eczane</button>
 <button onclick="window.open('https://www.google.com/maps/search/nöbetçi+eczane')">🗺 Eczane Harita</button>
@@ -279,6 +296,7 @@ async function fallbackToDefault() {
 <button class="back" onclick="back()">← Geri</button>
 </div>
 
+<!-- ULAŞIM -->
 <div id="ulasim" class="page container" style="display:none;">
 <button onclick="window.open('https://iett.istanbul/')">🚌 İETT Otobüs</button>
 <button onclick="window.open('https://www.metro.istanbul/Home/Index')">🚇 Metro Hatları</button>
@@ -286,6 +304,7 @@ async function fallbackToDefault() {
 <button class="back" onclick="back()">← Geri</button>
 </div>
 
+<!-- TRAFİK -->
 <div id="trafik" class="page container" style="display:none;">
 <button onclick="window.open('https://uym.ibb.gov.tr/yharita6/')">📡 Canlı MOBESE</button>
 <button onclick="window.open('https://www.google.com/maps')">🗺 Trafik Haritası</button>
@@ -294,6 +313,7 @@ async function fallbackToDefault() {
 <button class="back" onclick="back()">← Geri</button>
 </div>
 
+<!-- BELEDİYE HİZMETLERİ -->
 <div id="belediye" class="page container" style="display:none;">
 <button onclick="window.open('https://www.turkiye.gov.tr/')">🔐 E-Devlet Giriş</button>
 <button onclick="window.open('https://www.turkiye.gov.tr/')">💰 Vergi & Ceza Sorgulama</button>
@@ -302,6 +322,7 @@ async function fallbackToDefault() {
 <button class="back" onclick="back()">← Geri</button>
 </div>
 
+<!-- GEZİLECEK YERLER -->
 <div id="gezilecek" class="page container" style="display:none;">
 <button onclick="map('Ayasofya')">Ayasofya</button>
 <button onclick="map('Topkapı Sarayı')">Topkapı Sarayı</button>
@@ -316,6 +337,7 @@ async function fallbackToDefault() {
 <button class="back" onclick="back()">← Geri</button>
 </div>
 
+<!-- ACİL İLETİŞİM -->
 <div id="acil" class="page container" style="display:none;">
 <button onclick="location.href='tel:112'">🚑 Ambulans 112</button>
 <button onclick="location.href='tel:155'">👮 Polis 155</button>
@@ -324,6 +346,7 @@ async function fallbackToDefault() {
 <button class="back" onclick="back()">← Geri</button>
 </div>
 
+<!-- HAKKIMDA -->
 <div id="hakkimda" class="page container" style="display:none;">
 <div class="card">
 <h2>İstanbul Sende</h2>
@@ -345,6 +368,7 @@ async function fallbackToDefault() {
 <button class="back" onclick="back()">← Geri</button>
 </div>
 
+<!-- Sabit Yasal Bilgilendirme Alanı (Footer) -->
 <div class="footer-disclaimer">
     <strong>Önemli Bilgilendirme:</strong> Bu web sitesi hiçbir kamu kurum veya kuruluşu ile resmi bağı bulunmayan, bağımsız bir açık kaynak yönlendirme rehberidir. Sitedeki bağlantılar kullanıcıları doğrudan ilgili kurumların resmi adreslerine ulaştırır.
 </div>
