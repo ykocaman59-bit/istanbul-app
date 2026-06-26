@@ -182,74 +182,46 @@ window.onload = function() {
     getLiveWeather();
 }
 
-// 2. OTO-KONUM TABANLI CANLI HAVA DURUMU FONKSİYONU
-const apiKey = "858e60055ff950d87635a6396e00f915"; // Çalışan aktif OpenWeatherMap anahtarı
-
+// 2. DİNAMİK/OTO-KONUM TABANLI HAVA DURUMU FONKSİYONU
 function getLiveWeather() {
+    const apiKey = "BURAYA_API_KEY_YAZILACAK"; // Buraya OpenWeatherMap'ten aldığın API anahtarını yazmalısın.
     const widget = document.getElementById("weatherStatus");
-    let isFinished = false;
-
-    // Yavaş çalışan veya yanıt vermeyen cihazlar için 2.5 saniyelik güvenlik zaman aşımı
-    const safetyTimeout = setTimeout(() => {
-        if (!isFinished) {
-            isFinished = true;
-            getFallbackWeather();
-        }
-    }, 2500);
+    
+    if(apiKey === "BURAYA_API_KEY_YAZILACAK") {
+        // API anahtarı eklenene kadar çalışacak şık test/simülasyon modu
+        widget.innerHTML = "📍 Konumunuz: ☀️ 24°C (Açık - Test Modu)";
+        return;
+    }
 
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(async (position) => {
-            if (isFinished) return;
             const lat = position.coords.latitude;
             const lon = position.coords.longitude;
             
             try {
                 const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric&lang=tr`);
-                if (response.ok && !isFinished) {
-                    clearTimeout(safetyTimeout);
-                    isFinished = true;
+                if (response.ok) {
                     const data = await response.json();
                     const temp = Math.round(data.main.temp);
                     const desc = data.weather[0].description;
-                    const cityName = data.name; // GPS'ten gelen ilçe veya il ismi
-                    
-                    // Gökyüzü durumuna göre otomatik emoji eşleştirme
-                    let emoji = "☀️";
-                    if(desc.includes("bulut") || desc.includes("kapalı")) emoji = "☁️";
-                    if(desc.includes("yağmur") || desc.includes("yağış") || desc.includes("çiseleme")) emoji = "🌧️";
-                    if(desc.includes("kar")) emoji = "❄️";
-
-                    widget.innerHTML = `📍 ${cityName}: ${emoji} ${temp}°C`;
-                } else if (!isFinished) {
-                    clearTimeout(safetyTimeout);
-                    isFinished = true;
-                    getFallbackWeather();
+                    const cityName = data.name; // Kullanıcının GPS üzerinden tespit edilen ilçe veya şehir adı
+                    widget.innerHTML = `📍 ${cityName}: 🌡️ ${temp}°C (${desc.toUpperCase()})`;
+                } else {
+                    getFallbackWeather(apiKey);
                 }
             } catch (error) {
-                if (!isFinished) {
-                    clearTimeout(safetyTimeout);
-                    isFinished = true;
-                    getFallbackWeather();
-                }
+                getFallbackWeather(apiKey);
             }
         }, () => {
-            if (!isFinished) {
-                clearTimeout(safetyTimeout);
-                isFinished = true;
-                getFallbackWeather(); // Konum reddedilirse yedek plan
-            }
-        }, { timeout: 2000 });
+            getFallbackWeather(apiKey); // Konum izni reddedilirse İstanbul'u getir
+        });
     } else {
-        if (!isFinished) {
-            clearTimeout(safetyTimeout);
-            isFinished = true;
-            getFallbackWeather(); // Tarayıcı desteklemiyorsa yedek plan
-        }
+        getFallbackWeather(apiKey); // Tarayıcı desteklemiyorsa İstanbul'u getir
     }
 }
 
-// B Planı: Konum tespiti başarısız olursa çalışacak ana merkez (İstanbul) fonksiyonu
-async function getFallbackWeather() {
+// B Planı: Konum izni verilmezse varsayılan olarak genel İstanbul'u çeker
+async function getFallbackWeather(apiKey) {
     const widget = document.getElementById("weatherStatus");
     try {
         const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=Istanbul,TR&appid=${apiKey}&units=metric&lang=tr`);
@@ -257,15 +229,7 @@ async function getFallbackWeather() {
             const data = await response.json();
             const temp = Math.round(data.main.temp);
             const desc = data.weather[0].description;
-            
-            let emoji = "☀️";
-            if(desc.includes("bulut") || desc.includes("kapalı")) emoji = "☁️";
-            if(desc.includes("yağmur") || desc.includes("yağış") || desc.includes("çiseleme")) emoji = "🌧️";
-            if(desc.includes("kar")) emoji = "❄️";
-
-            widget.innerHTML = `📍 İstanbul: ${emoji} ${temp}°C`;
-        } else {
-            widget.innerHTML = "救援 Hava durumu şu an yüklenemedi.";
+            widget.innerHTML = `📍 İstanbul: 🌡️ ${temp}°C (${desc.toUpperCase()})`;
         }
     } catch (e) {
         widget.innerHTML = "🌦️ Hava durumu şu an yüklenemedi.";
@@ -282,7 +246,7 @@ async function getFallbackWeather() {
 </h1>
 
 <!-- Canlı Konum Tabanlı Hava Durumu Widget'ı -->
-<div class="weather-widget" id="weatherStatus">⏳ Hava durumu yükleniyor...</div>
+<div class="weather-widget" id="weatherStatus">⏳ Canlı konum hava durumu yükleniyor...</div>
 
 <div id="main" class="container">
 
