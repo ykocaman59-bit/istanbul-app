@@ -146,19 +146,36 @@ button:active {
 </style>
 
 <script>
+// HARİTA LİSTESİ VE VERİLERİ
+const yerler = [
+  {
+    isim: "Ayasofya",
+    aciklama: "Tarihi yapı",
+    lat: 41.0055,
+    lng: 28.9768
+  },
+  {
+    isim: "Taksim Meydanı",
+    aciklama: "Şehrin merkezi",
+    lat: 41.0369,
+    lng: 28.9862
+  }
+];
+
+// SAYFA GEÇİŞ FONKSİYONLARI
 function openPage(page) {
-    document.getElementById("main").style.display="none";
-    document.querySelectorAll(".page").forEach(p=>p.style.display="none");
-    document.getElementById(page).style.display="block";
+    document.getElementById("main").style.display = "none";
+    document.querySelectorAll(".page").forEach(p => p.style.display = "none");
+    document.getElementById(page).style.display = "block";
 }
 
 function back() {
-    document.querySelectorAll(".page").forEach(p=>p.style.display="none");
-    document.getElementById("main").style.display="block";
+    document.querySelectorAll(".page").forEach(p => p.style.display = "none");
+    document.getElementById("main").style.display = "block";
 }
 
-function map(q){
-    window.open("https://www.google.com/maps/search/?api=1&query="+q,"_blank");
+function map(q) {
+    window.open("https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(q), "_blank");
 }
 
 // 1. TEMA DEĞİŞTİRME FONKSİYONU
@@ -177,16 +194,23 @@ function toggleTheme() {
     localStorage.setItem("theme", targetTheme);
 }
 
-// Sayfa yüklendiğinde hafızayı kontrol et, canlı konumu başlat ve açılış animasyonunu kapat
+// SAYFA YÜKLENDİĞİNDE ÇALIŞACAK KODLAR
 window.onload = function() {
+    // Tema Kontrolü
     const savedTheme = localStorage.getItem("theme");
     if (savedTheme === "dark") {
         document.documentElement.setAttribute("data-theme", "dark");
-        document.getElementById("themeBtn").innerText = "☀️ Gündüz";
+        const themeBtn = document.getElementById("themeBtn");
+        if(themeBtn) themeBtn.innerText = "☀️ Gündüz";
     }
+
+    // Hava Durumu Başlat
     getLiveWeather();
 
-    // Açılış ekranını 2.5 saniye sonra kaldırır
+    // Harita Kartlarını ve Haritayı Başlat
+    initMapAndList();
+
+    // Açılış Animasyonunu 2.5 saniye sonra kapat
     setTimeout(() => {
         const splash = document.getElementById("splash-screen");
         if (splash) {
@@ -195,14 +219,40 @@ window.onload = function() {
     }, 2500);
 }
 
+// LEAFLET HARİTA VE LİSTE YÜKLEME
+function initMapAndList() {
+    const liste = document.getElementById("liste");
+    if (liste) {
+        liste.innerHTML = "";
+        yerler.forEach(yer => {
+          const div = document.createElement("div");
+          div.className = "card";
+          div.innerHTML = `<h3>${yer.isim}</h3><p>${yer.aciklama}</p>`;
+          liste.appendChild(div);
+        });
+    }
+
+    if (document.getElementById('map')) {
+        var mapInstance = L.map('map').setView([41.0082, 28.9784], 11);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          attribution: '© OpenStreetMap'
+        }).addTo(mapInstance);
+
+        yerler.forEach(yer => {
+          L.marker([yer.lat, yer.lng]).addTo(mapInstance)
+            .bindPopup(yer.isim);
+        });
+    }
+}
+
 // 2. DİNAMİK/OTO-KONUM TABANLI HAVA DURUMU FONKSİYONU
 function getLiveWeather() {
-    const apiKey = "BURAYA_API_KEY_YAZILACAK"; // Buraya OpenWeatherMap'ten aldığın API anahtarını yazmalısın.
+    const apiKey = "BURAYA_API_KEY_YAZILACAK";
     const widget = document.getElementById("weatherStatus");
     
     if(apiKey === "BURAYA_API_KEY_YAZILACAK") {
-        // API anahtarı eklenene kadar çalışacak şık test/simülasyon modu
-        widget.innerHTML = "📍 Konumunuz: ☀️ 24°C (Açık - Test Modu)";
+        if(widget) widget.innerHTML = "📍 Konumunuz: ☀️ 24°C (Açık - Test Modu)";
         return;
     }
 
@@ -210,15 +260,14 @@ function getLiveWeather() {
         navigator.geolocation.getCurrentPosition(async (position) => {
             const lat = position.coords.latitude;
             const lon = position.coords.longitude;
-            
             try {
                 const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric&lang=tr`);
                 if (response.ok) {
                     const data = await response.json();
                     const temp = Math.round(data.main.temp);
                     const desc = data.weather[0].description;
-                    const cityName = data.name; // Kullanıcının GPS üzerinden tespit edilen ilçe veya şehir adı
-                    widget.innerHTML = `📍 ${cityName}: 🌡️ ${temp}°C (${desc.toUpperCase()})`;
+                    const cityName = data.name;
+                    if(widget) widget.innerHTML = `📍 ${cityName}: 🌡️ ${temp}°C (${desc.toUpperCase()})`;
                 } else {
                     getFallbackWeather(apiKey);
                 }
@@ -226,14 +275,13 @@ function getLiveWeather() {
                 getFallbackWeather(apiKey);
             }
         }, () => {
-            getFallbackWeather(apiKey); // Konum izni reddedilirse İstanbul'u getir
+            getFallbackWeather(apiKey);
         });
     } else {
-        getFallbackWeather(apiKey); // Tarayıcı desteklemiyorsa İstanbul'u getir
+        getFallbackWeather(apiKey);
     }
 }
 
-// B Planı: Konum izni verilmezse varsayılan olarak genel İstanbul'u çeker
 async function getFallbackWeather(apiKey) {
     const widget = document.getElementById("weatherStatus");
     try {
@@ -242,12 +290,13 @@ async function getFallbackWeather(apiKey) {
             const data = await response.json();
             const temp = Math.round(data.main.temp);
             const desc = data.weather[0].description;
-            widget.innerHTML = `📍 İstanbul: 🌡️ ${temp}°C (${desc.toUpperCase()})`;
+            if(widget) widget.innerHTML = `📍 İstanbul: 🌡️ ${temp}°C (${desc.toUpperCase()})`;
         }
     } catch (e) {
-        widget.innerHTML = "🌦️ Hava durumu şu an yüklenemedi.";
+        if(widget) widget.innerHTML = "🌦️ Hava durumu şu an yüklenemedi.";
     }
 }
+    
 </script>
 
 </head>
