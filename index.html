@@ -17,6 +17,10 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://ykocaman59-bit.github.io/istanbul-app/">
 
+    <!-- Leaflet Harita CSS ve Proje Stil Dosyası -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="style.css">
+
 <style>
 /* Açık ve Koyu Tema Renk Tanımlamaları */
 :root {
@@ -144,6 +148,7 @@ button:active {
 <script>
 function openPage(page) {
     document.getElementById("main").style.display="none";
+    document.querySelectorAll(".page").forEach(p=>p.style.display="none");
     document.getElementById(page).style.display="block";
 }
 
@@ -172,7 +177,7 @@ function toggleTheme() {
     localStorage.setItem("theme", targetTheme);
 }
 
-// Sayfa yüklendiğinde hafızayı kontrol et ve canlı konumu başlat
+// Sayfa yüklendiğinde hafızayı kontrol et, canlı konumu başlat ve açılış animasyonunu kapat
 window.onload = function() {
     const savedTheme = localStorage.getItem("theme");
     if (savedTheme === "dark") {
@@ -180,6 +185,14 @@ window.onload = function() {
         document.getElementById("themeBtn").innerText = "☀️ Gündüz";
     }
     getLiveWeather();
+
+    // Açılış ekranını 2.5 saniye sonra kaldırır
+    setTimeout(() => {
+        const splash = document.getElementById("splash-screen");
+        if (splash) {
+            splash.classList.add("fade-out");
+        }
+    }, 2500);
 }
 
 // 2. DİNAMİK/OTO-KONUM TABANLI HAVA DURUMU FONKSİYONU
@@ -240,6 +253,16 @@ async function getFallbackWeather(apiKey) {
 </head>
 <body>
 
+<!-- AÇILIŞ (SPLASH SCREEN) ANİMASYON ALANI -->
+<div id="splash-screen">
+  <div class="splash-content">
+    <img src="https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?auto=format&fit=crop&w=600&q=80" alt="İstanbul Silhouette" class="splash-img">
+    <h1 class="splash-title">İstanbul Sende</h1>
+    <p class="splash-subtitle">Şehir Elinin Altında</p>
+    <div class="splash-loader"></div>
+  </div>
+</div>
+
 <h1>
     İstanbul Sende
     <button id="themeBtn" class="theme-toggle" onclick="toggleTheme()">🌙 Gece</button>
@@ -255,6 +278,7 @@ async function getFallbackWeather(apiKey) {
 <button onclick="openPage('trafik')">🚦 Trafik</button>
 <button onclick="openPage('belediye')">🏛 Belediye Hizmetleri</button>
 <button onclick="openPage('gezilecek')">📍 Gezilecek Yerler</button>
+<button onclick="openPage('haritaPage')">🗺️ İnteraktif Harita</button>
 <button onclick="openPage('acil')">🚨 Acil İletişim</button>
 <button onclick="openPage('hakkimda')">ℹ️ Hakkımda</button>
 
@@ -310,6 +334,14 @@ async function getFallbackWeather(apiKey) {
 <button class="back" onclick="back()">← Geri</button>
 </div>
 
+<!-- İNTERAKTİF HARİTA SAYFASI -->
+<div id="haritaPage" class="page container" style="display:none;">
+<h2>Öne Çıkan Konumlar Haritası</h2>
+<div id="map"></div>
+<div id="liste"></div>
+<button class="back" onclick="back()">← Geri</button>
+</div>
+
 <!-- ACİL İLETİŞİM -->
 <div id="acil" class="page container" style="display:none;">
 <button onclick="location.href='tel:112'">🚑 Ambulans 112</button>
@@ -346,5 +378,8 @@ async function getFallbackWeather(apiKey) {
     <strong>Önemli Bilgilendirme:</strong> Bu web sitesi hiçbir kamu kurum veya kuruluşu ile resmi bağı bulunmayan, bağımsız bir açık kaynak yönlendirme rehberidir. Sitedeki bağlantılar kullanıcıları doğrudan ilgili kurumların resmi adreslerine ulaştırır.
 </div>
 
+<!-- Leaflet Harita Kütüphanesi ve Script.js Bağlantısı -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
