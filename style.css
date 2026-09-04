@@ -2,9 +2,10 @@
 :root {
     --bg-gradient: linear-gradient(to bottom, #e0eafc, #cfdef3);
     --text-color: #333;
-    --card-bg: white;
+    --card-bg: #ffffff;
     --header-bg: linear-gradient(to right, #00c6ff, #0072ff);
     --footer-bg: rgba(255, 255, 255, 0.7);
+    --splash-bg: #ffffff;
 }
 
 [data-theme="dark"] {
@@ -13,6 +14,7 @@
     --card-bg: #1e272e;
     --header-bg: linear-gradient(to right, #3a7bd5, #3a6073);
     --footer-bg: rgba(0, 0, 0, 0.5);
+    --splash-bg: #0f172a;
 }
 
 body {
@@ -26,17 +28,6 @@ body {
     transition: background 0.3s, color 0.3s;
 }
 
-header {
-  background: linear-gradient(135deg, #0d6efd, #00c6ff);
-  color: white;
-  padding: 30px;
-  text-align: center;
-}
-
-section {
-  padding: 20px;
-}
-
 h1 {
     background: var(--header-bg);
     color: white;
@@ -48,7 +39,7 @@ h1 {
 }
 
 h2 {
-  margin-top: 30px;
+    margin-top: 20px;
 }
 
 /* Sağ Üst Köşedeki Gece/Gündüz Modu Butonu */
@@ -56,7 +47,7 @@ h2 {
     position: absolute;
     right: 15px;
     top: 20px;
-    background: rgba(255,255,255,0.2);
+    background: rgba(255, 255, 255, 0.2);
     border: none;
     color: white;
     padding: 8px 12px;
@@ -84,7 +75,7 @@ button {
     font-size: 16px;
     background: linear-gradient(to right, #ff7e5f, #feb47b);
     color: white;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     display: block;
     cursor: pointer;
     transition: transform 0.1s;
@@ -95,19 +86,20 @@ button:active {
 }
 
 .btn {
-  display: block;
-  background: #6b3f2b;
-  color: white;
-  padding: 12px;
-  margin: 10px 0;
-  text-align: center;
-  border-radius: 10px;
-  text-decoration: none;
+    display: block;
+    background: #6b3f2b;
+    color: white;
+    padding: 12px;
+    margin: 10px 0;
+    text-align: center;
+    border-radius: 10px;
+    text-decoration: none;
 }
 
 .back {
     background: #333;
 }
+
 [data-theme="dark"] .back {
     background: #485460;
 }
@@ -118,7 +110,7 @@ button:active {
     border-radius: 20px;
     margin: 10px 0;
     text-align: left;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
 }
 
 /* Canlı Hava Durumu Alanı */
@@ -130,14 +122,16 @@ button:active {
     border-radius: 20px;
     font-size: 14px;
     font-weight: bold;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 /* Harita Stili */
 #map {
-  height: 300px;
-  margin-top: 20px;
-  border-radius: 10px;
+    height: 300px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 /* Yasal Uyarı Footer Alanı */
@@ -148,88 +142,77 @@ button:active {
     text-align: center;
     padding: 15px;
     margin-top: auto;
-    border-top: 1px solid rgba(0,0,0,0.05);
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
     line-height: 1.4;
     opacity: 0.8;
 }
 
-/* SPLASH SCREEN STİLLERİ */
+/* INSTAGRAM TARZI SPLASH SCREEN (AÇILIŞ ANİMASYONU) */
 #splash-screen {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-  transition: opacity 0.8s ease, visibility 0.8s ease;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: var(--splash-bg);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 99999;
+    transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.6s;
 }
 
 .splash-content {
-  text-align: center;
-  color: white;
-  animation: zoomIn 1s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    animation: appLogoPulse 1.8s ease-in-out infinite alternate;
 }
 
 .splash-img {
-  width: 140px;
-  height: 140px;
-  object-fit: cover;
-  border-radius: 50%;
-  border: 3px solid rgba(255, 255, 255, 0.8);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
-  margin-bottom: 15px;
+    width: 110px;
+    height: 110px;
+    object-fit: cover;
+    border-radius: 28px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+    margin-bottom: 20px;
 }
 
 .splash-title {
-  font-size: 28px;
-  font-weight: bold;
-  margin: 10px 0 5px 0;
-  background: linear-gradient(45deg, #00c6ff, #0072ff);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text-color);
+    margin: 0;
+    letter-spacing: -0.5px;
+    background: none;
+    -webkit-text-fill-color: initial;
 }
 
 .splash-subtitle {
-  font-size: 14px;
-  color: #d1d8e0;
-  margin-bottom: 20px;
-  letter-spacing: 1px;
+    font-size: 13px;
+    color: #64748b;
+    margin-top: 6px;
+    font-weight: 500;
 }
 
-/* Yükleniyor Halkası */
-.splash-loader {
-  width: 30px;
-  height: 30px;
-  border: 3px solid rgba(255, 255, 255, 0.2);
-  border-top-color: #00c6ff;
-  border-radius: 50%;
-  margin: 0 auto;
-  animation: spin 1s linear infinite;
+/* Logo Nefes Alma (Pulse) Animasyonu */
+@keyframes appLogoPulse {
+    0% {
+        transform: scale(0.96);
+        opacity: 0.85;
+    }
+    100% {
+        transform: scale(1.05);
+        opacity: 1;
+    }
 }
 
+/* Uygulama Açılırken Yukarı Doğru Kayma ve Kaybolma Efekti */
 #splash-screen.fade-out {
-  opacity: 0;
-  visibility: hidden;
-}
-
-/* Animasyon Tanımları */
-@keyframes zoomIn {
-  from {
     opacity: 0;
-    transform: scale(0.8);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
+    transform: translateY(-40px) scale(1.02);
+    visibility: hidden;
+    pointer-events: none;
 }
