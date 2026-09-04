@@ -1,7 +1,29 @@
+/* Açık ve Koyu Tema Renk Tanımlamaları */
+:root {
+    --bg-gradient: linear-gradient(to bottom, #e0eafc, #cfdef3);
+    --text-color: #333;
+    --card-bg: white;
+    --header-bg: linear-gradient(to right, #00c6ff, #0072ff);
+    --footer-bg: rgba(255, 255, 255, 0.7);
+}
+
+[data-theme="dark"] {
+    --bg-gradient: linear-gradient(to bottom, #141e30, #243b55);
+    --text-color: #f5f5f5;
+    --card-bg: #1e272e;
+    --header-bg: linear-gradient(to right, #3a7bd5, #3a6073);
+    --footer-bg: rgba(0, 0, 0, 0.5);
+}
+
 body {
-  font-family: 'Segoe UI', sans-serif;
-  margin: 0;
-  background: #f4f6f9;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: var(--bg-gradient);
+    color: var(--text-color);
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    transition: background 0.3s, color 0.3s;
 }
 
 header {
@@ -15,8 +37,61 @@ section {
   padding: 20px;
 }
 
+h1 {
+    background: var(--header-bg);
+    color: white;
+    padding: 20px;
+    border-radius: 0 0 25px 25px;
+    margin: 0;
+    text-align: center;
+    position: relative;
+}
+
 h2 {
   margin-top: 30px;
+}
+
+/* Sağ Üst Köşedeki Gece/Gündüz Modu Butonu */
+.theme-toggle {
+    position: absolute;
+    right: 15px;
+    top: 20px;
+    background: rgba(255,255,255,0.2);
+    border: none;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 20px;
+    font-size: 14px;
+    cursor: pointer;
+    width: auto;
+    margin: 0;
+    box-shadow: none;
+    display: inline-block;
+}
+
+.container {
+    padding: 15px;
+    flex: 1;
+    text-align: center;
+}
+
+button {
+    width: 90%;
+    padding: 15px;
+    margin: 10px auto;
+    border: none;
+    border-radius: 30px;
+    font-size: 16px;
+    background: linear-gradient(to right, #ff7e5f, #feb47b);
+    color: white;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    display: block;
+    cursor: pointer;
+    transition: transform 0.1s;
+}
+
+button:active {
+    transform: scale(0.98);
 }
 
 .btn {
@@ -30,21 +105,131 @@ h2 {
   text-decoration: none;
 }
 
-.card {
-  background: white;
-  padding: 15px;
-  border-radius: 10px;
+.back {
+    background: #333;
+}
+[data-theme="dark"] .back {
+    background: #485460;
 }
 
+.card {
+    background: var(--card-bg);
+    padding: 20px;
+    border-radius: 20px;
+    margin: 10px 0;
+    text-align: left;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+/* Canlı Hava Durumu Alanı */
+.weather-widget {
+    background: var(--card-bg);
+    margin: 10px auto;
+    width: 85%;
+    padding: 12px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: bold;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* Harita Stili */
 #map {
   height: 300px;
   margin-top: 20px;
   border-radius: 10px;
 }
 
-.card {
-  margin-top: 10px;
-  padding: 15px;
-  background: white;
-  border-radius: 10px;
+/* Yasal Uyarı Footer Alanı */
+.footer-disclaimer {
+    background-color: var(--footer-bg);
+    color: var(--text-color);
+    font-size: 12px;
+    text-align: center;
+    padding: 15px;
+    margin-top: auto;
+    border-top: 1px solid rgba(0,0,0,0.05);
+    line-height: 1.4;
+    opacity: 0.8;
+}
+
+/* SPLASH SCREEN STİLLERİ */
+#splash-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+
+.splash-content {
+  text-align: center;
+  color: white;
+  animation: zoomIn 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.splash-img {
+  width: 140px;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+  margin-bottom: 15px;
+}
+
+.splash-title {
+  font-size: 28px;
+  font-weight: bold;
+  margin: 10px 0 5px 0;
+  background: linear-gradient(45deg, #00c6ff, #0072ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.splash-subtitle {
+  font-size: 14px;
+  color: #d1d8e0;
+  margin-bottom: 20px;
+  letter-spacing: 1px;
+}
+
+/* Yükleniyor Halkası */
+.splash-loader {
+  width: 30px;
+  height: 30px;
+  border: 3px solid rgba(255, 255, 255, 0.2);
+  border-top-color: #00c6ff;
+  border-radius: 50%;
+  margin: 0 auto;
+  animation: spin 1s linear infinite;
+}
+
+#splash-screen.fade-out {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* Animasyon Tanımları */
+@keyframes zoomIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
